@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>N.AI.IN – Smarter Than Google</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    input {
+      padding: 12px;
+      font-size: 18px;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background: #00c853;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>N.AI.IN 🔍</h1>
+  <p>Search Smarter. Powered by AI.</p>
+
+  <input id="searchBox" type="text" placeholder="Search anything..." />
+  <button onclick="search()">Search</button>
+
+  <br><br>
+  <button onclick="login()">Login with Gmail</button>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAZ88k3qpNWsiblF2Axnf6p7TYGib8uo2k",
+      authDomain: "n-ai-in.firebaseapp.com",
+      projectId: "n-ai-in",
+      storageBucket: "n-ai-in.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:exampleappid"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function login() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          alert("Welcome, " + result.user.displayName);
+        })
+        .catch(error => {
+          alert("Login failed: " + error.message);
+        });
+    }
+
+    function search() {
+      const query = document.getElementById("searchBox").value.trim();
+      if (query !== "") {
+        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)} site:n.ai.in`;
+      } else {
+        alert("Please enter a search query.");
+      }
+    }
+  </script>
+
+</body>
+</html>
