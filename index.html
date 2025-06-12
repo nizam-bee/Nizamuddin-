@@ -58,37 +58,4 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAZ88k3qpNWsiblF2Axnf6p7TYGib8uo2k",
-      authDomain: "n-ai-in.firebaseapp.com",
-      projectId: "n-ai-in",
-      storageBucket: "n-ai-in.appspot.com",
-      messagingSenderId: "1234567890",
-      appId: "1:1234567890:web:exampleappid"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    function login() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then(result => {
-          alert("Welcome, " + result.user.displayName);
-        })
-        .catch(error => {
-          alert("Login failed: " + error.message);
-        });
-    }
-
-    function search() {
-      const query = document.getElementById("searchBox").value.trim();
-      if (query !== "") {
-        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)} site:n.ai.in`;
-      } else {
-        alert("Please enter a search query.");
-      }
-    }
-  </script>
-
-</body>
-</html>
+    const firebaseConfig
