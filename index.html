@@ -1,4 +1,15 @@
-headers: {
-  "Authorization": "Bearer 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",
-  "Content-Type": "application/json"
-},
+<script>
+  async function searchQuery() {
+    const input = document.getElementById("query").value;
+    const response = await fetch("https://api-inference.huggingface.co/models/deepseek-ai/deepseek-llm-chat", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer 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",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ inputs: input })
+    });
+    const data = await response.json();
+    document.getElementById("result").innerText = data?.[0]?.generated_text || "No result.";
+  }
+</script>
