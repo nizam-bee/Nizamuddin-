@@ -30,20 +30,4 @@
       display: flex;
       justify-content: center;
     }
-  </style>
-</head>
-<body>
-
-  <h1>Welcome to N.AI.IN</h1>
-  <p>Login with Google or Phone Number</p>
-
-  <div id="firebaseui-auth-container"></div>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCPT_PSbzZZciMg_UDFKJD4k3wAX4Bj8Fg",
-      authDomain: "n-ai-in.firebaseapp.com",
-      projectId: "n-ai-in",
-      storageBucket: "n-ai-in.appspot.com",
-      messagingSenderId: "410781626086",
-      appId: "1:410781626086:web:c6
+  </style
