@@ -1,36 +1,12 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding-top: 100px;
-  background: #fff;
-}
-.logo {
-  width: 80px;
-  margin-bottom: 10px;
-}
-h1 span {
-  color: #4285F4;
-}
-input {
-  width: 50%;
-  padding: 12px;
-  font-size: 18px;
-  margin: 20px 0;
-}
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background: #4285F4;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-#results {
-  margin-top: 30px;
-  font-size: 18px;
-}
-.top-right {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyCPT_PSbzZZciMg_UDFKJD4k3wAX4Bj8Fg",
+  authDomain: "n-ai-in.firebaseapp.com",
+  projectId: "n-ai-in",
+  storageBucket: "n-ai-in.appspot.com",
+  messagingSenderId: "410781626086",
+  appId: "1:410781626086:web:c6a9902e002e29d3325527",
+  measurementId: "G-V95LX9GNPW"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
