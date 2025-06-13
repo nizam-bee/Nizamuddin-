@@ -25,9 +25,4 @@
     h1 {
       margin-top: 40px;
     }
-    #firebaseui-auth-container {
-      margin-top: 40px;
-      display: flex;
-      justify-content: center;
-    }
-  </style
+    #firebaseui-auth-c
