@@ -1,46 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>n.ai.in - Smarter Than Google</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>n.ai.in - Smarter Search</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: #ffffff;
-      color: #000000;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
     }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-      border-bottom: 1px solid #eee;
-    }
-
     .logo {
-      font-size: 1.5rem;
+      font-size: 30px;
       font-weight: bold;
-      color: #3b82f6;
+      color: #1a73e8;
+      margin-bottom: 20px;
     }
-
-    .sign-in {
-      padding: 0.5rem 1rem;
-      background-color: #3b82f6;
+    input[type="text"] {
+      width: 90%;
+      max-width: 500px;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #1a73e8;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      margin-top: 10px;
     }
+    #results {
+      margin-top: 30px;
+      text-align: left;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .image {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">n.ai.in</div>
+  <input type="text" id="searchInput" placeholder="Search with n.ai.in...">
+  <br>
+  <button onclick="searchNaiin()">Search</button>  <div id="results"></div>  <script>
+    async function searchNaiin() {
+      const query = document.getElementById("searchInput").value;
+      const resultDiv = document.getElementById("results");
+      resultDiv.innerHTML = "<p>Loading...</p>";
 
-    main {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      // Fetch AI answer (mock or optional real API)
+      const aiAnswer = `Here is a sample answer about "${query}". n.ai.in is smarter than Google.`;
+
+      // Fetch image from Unsplash (Free)
+      const unsplashApiKey = "YOUR_UNSPLASH_ACCESS_KEY"; // Replace this with real Unsplash API key
+      const imageURL = `https://source.unsplash.com/600x400/?${encodeURIComponent(query)}`; // Temporary free alternative
+
+      // Show result
+      resultDiv.innerHTML = `
+        <h2>Result for: ${query}</h2>
+        <p>${aiAnswer}</p>
+        <img class="image" src="${imageURL}" alt="${query}" />
+      `;
+    }
+  </script></body>
+</html>
