@@ -1,25 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>n.ai.in – Smartest Search</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-  <script defer src="firebase-config.js"></script>
-  <script defer src="script.js"></script>
-</head>
-<body>
-  <div class="top-right" id="authSection">
-    <button id="loginBtn">Sign In</button>
-  </div>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: white;
+  margin: 0;
+  padding-top: 100px;
+}
+h1 {
+  font-size: 50px;
+  font-weight: bold;
+}
+h1 .n { color: #4285F4; }
+h1 .ai { color: #34A853; }
+h1 .in { color: #EA4335; }
 
-  <div class="container">
-    <h1><span class="n">n</span><span class="ai">.ai</span><span class="in">.in</span></h1>
-    <input type="text" id="searchInput" placeholder="Search smarter than Google..." />
-    <button onclick="performSearch()">Search</button>
-    <div id="results"></div>
-  </div>
-</body>
-</html>
+input {
+  width: 50%;
+  padding: 12px;
+  font-size: 18px;
+  margin: 20px 0;
+}
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #4285F4;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+#results {
+  margin-top: 30px;
+  font-size: 18px;
+}
+.top-right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
