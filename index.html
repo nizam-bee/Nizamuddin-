@@ -1,105 +1,151 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>N.AI.IN - Smarter Than Google</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>n.ai.in - Smarter Than Google</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #000000;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
-      background: #f9f9f9;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
     }
+
     .logo {
+      font-size: 1.5rem;
       font-weight: bold;
-      font-size: 20px;
-      color: #4285f4;
+      color: #3b82f6;
     }
-    .login-btn {
-      background: #4285f4;
+
+    .sign-in {
+      padding: 0.5rem 1rem;
+      background-color: #3b82f6;
       color: white;
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
     }
-    .main-content {
-      flex: 1;
+
+    main {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 20px;
+      padding: 2rem;
     }
-    .search-bar {
+
+    .search-box {
       display: flex;
       align-items: center;
       border: 1px solid #ccc;
       border-radius: 30px;
-      padding: 10px;
-      width: 90%;
-      max-width: 600px;
-      margin: 20px auto;
+      padding: 0.5rem 1rem;
+      max-width: 90%;
+      width: 600px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .search-bar input {
-      flex: 1;
+
+    .search-box input {
+      flex-grow: 1;
       border: none;
       outline: none;
-      font-size: 18px;
+      font-size: 1.2rem;
+      padding: 0.5rem;
     }
-    .search-bar .icons {
+
+    .search-icons {
       display: flex;
       gap: 10px;
-      font-size: 20px;
+      font-size: 1.2rem;
+      color: #666;
+      cursor: pointer;
     }
-    footer {
-      background: #f1f1f1;
-      padding: 15px;
+
+    .news-section {
+      margin-top: 2rem;
       text-align: center;
     }
-    .news-section {
-      margin-top: 40px;
+
+    footer {
+      padding: 1rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+      font-size: 0.9rem;
+      color: #555;
     }
-    .news-section h2 {
-      font-size: 18px;
-      color: #333;
+
+    .bottom-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 1rem;
     }
-    .news-section p {
-      font-size: 14px;
-      color: #666;
+
+    .n-logo {
+      background-color: #3b82f6;
+      color: white;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    @media(max-width: 600px) {
+      .search-box {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">N.AI.IN</div>
-    <button class="login-btn" onclick="window.location.href='login.html'">Sign In</button>
-  </header>  <div class="main-content">
-    <div class="search-bar">
-      <input type="text" placeholder="Search smarter than Google..." />
-      <div class="icons">
-        🔊 📷 🔍
-      </div>
-    </div><div class="news-section">
-  <h2>Latest News & AI Tips</h2>
-  <p>- AI now translates videos into any language.</p>
-  <p>- N.AI.IN beats Google in smart coding and answers.</p>
-  <p>- Update: AI camera search now launched.</p>
-</div>
 
-  </div>  <footer>
-    <p>Powered by N Symbol | N.AI.IN © 2025</p>
+  <header>
+    <div class="logo">n.ai.in</div>
+    <button class="sign-in" onclick="window.location.href='login.html'">Sign In</button>
+  </header>
+
+  <main>
+    <div class="search-box">
+      <input type="text" placeholder="Search with n.ai.in" />
+      <div class="search-icons">
+        🔍
+        🎤
+        📷
+      </div>
+    </div>
+
+    <div class="news-section">
+      <h3>🔍 Trending Smart AI News</h3>
+      <p>India develops fastest AI engine to rival ChatGPT & Google</p>
+      <p>New breakthrough in voice and visual search technologies</p>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="n-logo">N</div>
+      <div>n.ai.in • Smarter Than Google</div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 n.ai.in | All rights reserved.
   </footer>
+
 </body>
 </html>
