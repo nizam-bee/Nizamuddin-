@@ -1,44 +1,25 @@
-// Login with Google
-document.getElementById("loginBtn").onclick = () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider)
-    .then(result => {
-      const user = result.user;
-      document.getElementById("authSection").innerHTML = `
-        <span>Hi, ${user.displayName}</span>
-        <img src="${user.photoURL}" width="30" style="border-radius:50%; margin-left:10px;">
-      `;
-    })
-    .catch(error => {
-      alert("Login error: " + error.message);
-    });
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>n.ai.in – Smartest Search</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script defer src="firebase-config.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div class="top-right" id="authSection">
+    <button id="loginBtn">Sign In</button>
+  </div>
 
-// Search simulation
-function performSearch() {
-  const query = document.getElementById("searchInput").value.trim();
-  if (!query) return;
-
-  const start = performance.now();
-  setTimeout(() => {
-    const end = performance.now();
-    const time = (end - start) / 1000;
-    const results = `
-      <p>Showing results for "<b>${query}</b>"</p>
-      <p>About ${Math.floor(Math.random() * 1000000)} results in ${time.toFixed(2)} seconds</p>
-      <div style="text-align:left; margin:20px auto; width:60%;">
-        <p><b>AI Answer:</b> ${generateAIResponse(query)}</p>
-      </div>
-    `;
-    document.getElementById("results").innerHTML = results;
-  }, 500);
-}
-
-// Smart AI responses
-function generateAIResponse(query) {
-  const lower = query.toLowerCase();
-  if (lower.includes("sun")) return "The sun is the star at the center of the Solar System.";
-  if (lower.includes("india")) return "India is a country known for its culture, diversity, and democracy.";
-  if (lower.includes("chatgpt")) return "ChatGPT is an AI chatbot developed by OpenAI.";
-  return "This is a smart AI answer to your question.";
-}
+  <div class="container">
+    <h1><span class="n">n</span><span class="ai">.ai</span><span class="in">.in</span></h1>
+    <input type="text" id="searchInput" placeholder="Search smarter than Google..." />
+    <button onclick="performSearch()">Search</button>
+    <div id="results"></div>
+  </div>
+</body>
+</html>
