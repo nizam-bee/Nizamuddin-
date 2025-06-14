@@ -1,113 +1,127 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>n.ai.in - Search Results</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>n.ai.in - AI Smart Search</title>
   <style>
-    body {
-      font-family: sans-serif;
+    * {
       margin: 0;
-      background: #f5f5f5;
+      padding: 0;
+      box-sizing: border-box;
     }
-    header {
-      background: white;
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      padding: 20px;
     }
     .logo {
+      font-size: 2.5rem;
+      color: #3b82f6;
       font-weight: bold;
-      font-size: 22px;
-      color: #2c72b5;
+      text-align: center;
+      margin-bottom: 20px;
     }
-    .search-bar {
-      flex: 1;
-      margin: 0 20px;
-    }
-    .search-bar input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-    .image-results {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
-      padding: 20px;
-      background: white;
-    }
-    .image-results img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    .news-section {
-      padding: 20px;
-      background: #fffbe6;
-    }
-    .news-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    .news-grid {
+    .search-box {
       display: flex;
-      overflow-x: auto;
+      justify-content: center;
+      align-items: center;
       gap: 10px;
+      margin-bottom: 20px;
     }
-    .news-item {
-      min-width: 220px;
-      background: white;
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    .search-box input {
+      width: 80%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 25px;
+      border: 1px solid #ccc;
     }
-    .news-item img {
+    .search-box button {
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: none;
+      background: #3b82f6;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .results {
+      max-width: 1000px;
+      margin: auto;
+    }
+    .section-title {
+      font-size: 20px;
+      margin: 20px 0 10px;
+      font-weight: bold;
+    }
+    .image-results,
+    .news-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .image-results img,
+    .news-results img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 12px;
     }
-    .news-item p {
-      margin: 5px 0 0;
-      font-size: 14px;
+    .news-card {
+      background: white;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .lang-switch {
+      text-align: center;
+      margin: 15px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">n.ai.in</div>
-    <div class="search-bar">
-      <input type="text" placeholder="Search...">
-    </div>
-  </header>  <div class="image-results">
-    <img src="https://source.unsplash.com/300x200/?biryani" alt="Biryani">
-    <img src="https://source.unsplash.com/300x200/?chicken-biryani" alt="Chicken Biryani">
-    <img src="https://source.unsplash.com/300x200/?food-biryani" alt="Food Biryani">
-    <img src="https://source.unsplash.com/300x200/?hyderabadi-biryani" alt="Hyderabadi Biryani">
-    <img src="https://source.unsplash.com/300x200/?biryani-dish" alt="Biryani Dish">
-  </div>  <div class="news-section">
-    <div class="news-title">Top News</div>
-    <div class="news-grid">
-      <div class="news-item">
-        <img src="https://source.unsplash.com/220x120/?india-news" alt="News">
-        <p>India launches AI mission 2025</p>
-      </div>
-      <div class="news-item">
-        <img src="https://source.unsplash.com/220x120/?tech" alt="News">
-        <p>AI replaces traditional search engines</p>
-      </div>
-      <div class="news-item">
-        <img src="https://source.unsplash.com/220x120/?job" alt="News">
-        <p>New AI jobs coming to Bengaluru</p>
-      </div>
-      <div class="news-item">
-        <img src="https://source.unsplash.com/220x120/?startups" alt="News">
-        <p>Top 10 Indian AI Startups in 2025</p>
-      </div>
-    </div>
-  </div>
-</body>
+  <div class="logo">n.ai.in</div>  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search anything...">
+    <button onclick="performSearch()">Search</button>
+  </div>  <div class="lang-switch">
+    <label for="langSelect">Language: </label>
+    <select id="langSelect">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+      <option value="te">Telugu</option>
+      <option value="ta">Tamil</option>
+      <option value="ml">Malayalam</option>
+    </select>
+  </div>  <div class="results">
+    <div class="section-title">Image Results</div>
+    <div class="image-results" id="imageResults"></div><div class="section-title">News</div>
+<div class="news-results" id="newsResults"></div>
+
+  </div>  <script>
+    async function performSearch() {
+      const query = document.getElementById('searchInput').value;
+      const imageContainer = document.getElementById('imageResults');
+      const newsContainer = document.getElementById('newsResults');
+      const lang = document.getElementById('langSelect').value;
+
+      imageContainer.innerHTML = 'Loading images...';
+      newsContainer.innerHTML = 'Loading news...';
+
+      // Image search (Unsplash Demo API)
+      const imageRes = await fetch(`https://api.unsplash.com/search/photos?query=${query}&client_id=YOUR_UNSPLASH_API_KEY`);
+      const imageData = await imageRes.json();
+
+      imageContainer.innerHTML = imageData.results.map(img => 
+        `<img src="${img.urls.small}" alt="${img.alt_description}">`
+      ).join('');
+
+      // Fake news placeholder (replace with real API later)
+      newsContainer.innerHTML = `
+        <div class="news-card">
+          <img src="https://source.unsplash.com/300x200/?news" alt="news">
+          <p>${query} breaking news update in ${lang}</p>
+        </div>
+        <div class="news-card">
+          <img src="https://source.unsplash.com/301x200/?breaking-news" alt="news">
+          <p>Latest update on ${query} in ${lang}</p>
+        </div>`;
+    }
+  </script></body>
 </html>
