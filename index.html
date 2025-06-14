@@ -2,76 +2,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>n.ai.in - Smarter Search</title>
+  <title>n.ai.in - Smarter Than Google</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script defer src="app.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-    .logo {
-      font-size: 30px;
-      font-weight: bold;
-      color: #1a73e8;
-      margin-bottom: 20px;
-    }
-    input[type="text"] {
-      width: 90%;
-      max-width: 500px;
-      padding: 10px;
-      font-size: 18px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    #results {
-      margin-top: 30px;
-      text-align: left;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .image {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
     }
   </style>
 </head>
-<body>
-  <div class="logo">n.ai.in</div>
-  <input type="text" id="searchInput" placeholder="Search with n.ai.in...">
-  <br>
-  <button onclick="searchNaiin()">Search</button>  <div id="results"></div>  <script>
-    async function searchNaiin() {
-      const query = document.getElementById("searchInput").value;
-      const resultDiv = document.getElementById("results");
-      resultDiv.innerHTML = "<p>Loading...</p>";
-
-      // Fetch AI answer (mock or optional real API)
-      const aiAnswer = `Here is a sample answer about "${query}". n.ai.in is smarter than Google.`;
-
-      // Fetch image from Unsplash (Free)
-      const unsplashApiKey = "YOUR_UNSPLASH_ACCESS_KEY"; // Replace this with real Unsplash API key
-      const imageURL = `https://source.unsplash.com/600x400/?${encodeURIComponent(query)}`; // Temporary free alternative
-
-      // Show result
-      resultDiv.innerHTML = `
-        <h2>Result for: ${query}</h2>
-        <p>${aiAnswer}</p>
-        <img class="image" src="${imageURL}" alt="${query}" />
-      `;
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-md flex items-center justify-between px-4 py-2">
+    <div class="flex items-center space-x-2">
+      <img src="https://cdn-icons-png.flaticon.com/512/685/685655.png" alt="Camera" class="w-6 h-6"/>
+      <span class="font-bold text-lg bg-gradient-to-r from-orange-500 via-white to-green-500 bg-clip-text text-transparent">n.ai.in</span>
+    </div>
+    <a href="login.html" class="text-blue-600 font-semibold">Sign In</a>
+  </header>  <!-- Search Section -->  <main class="flex-1 flex flex-col items-center justify-center px-4 text-center">
+    <h1 class="text-2xl font-bold text-gray-800 mt-10">Search Smarter with <span class="text-blue-500">n.ai.in</span></h1>
+    <div class="flex items-center border border-gray-300 rounded-full px-4 py-2 mt-6 w-full max-w-md bg-white shadow-sm">
+      <input type="text" id="searchQuery" placeholder="Search anything..." class="flex-1 outline-none px-2"/>
+      <button onclick="voiceSearch()">
+        <img src="https://cdn-icons-png.flaticon.com/512/61/61012.png" class="w-5 h-5 mx-2" alt="Mic"/>
+      </button>
+      <button onclick="performSearch()">
+        <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" class="w-5 h-5" alt="Search"/>
+      </button>
+    </div>
+    <p class="mt-2 text-sm text-gray-600">AI results with code, images, and instant answers (0.4s)</p>
+  </main>  <!-- News Feed -->  <section class="bg-white p-4 shadow-md mt-8">
+    <h2 class="text-lg font-semibold text-gray-700 mb-3">Trending News</h2>
+    <div id="newsFeed" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- News will load here -->
+    </div>
+  </section>  <!-- Footer -->  <footer class="mt-auto bg-gray-200 py-2 text-center text-sm text-gray-600">
+    &copy; 2025 n.ai.in | Built in India 🇮🇳
+  </footer>  <script>
+    function performSearch() {
+      const query = document.getElementById("searchQuery").value;
+      if (!query) return;
+      // Simulate AI result response
+      alert("Searching for: " + query + "\nFetching smarter than Google...");
+      // In real version: fetch from backend AI
     }
+
+    function voiceSearch() {
+      alert("Voice search coming soon!");
+    }
+
+    // News feed simulation
+    const news = [
+      { title: "AI breaks new boundaries in 2025", img: "https://source.unsplash.com/random/400x200?ai" },
+      { title: "India launches world’s smartest search engine", img: "https://source.unsplash.com/random/400x200?technology" },
+      { title: "ChatGPT now powers real-time search", img: "https://source.unsplash.com/random/400x200?robot" },
+      { title: "How n.ai.in is beating Google", img: "https://source.unsplash.com/random/400x200?startup" }
+    ];
+    const container = document.getElementById("newsFeed");
+    news.forEach(n => {
+      const div = document.createElement("div");
+      div.innerHTML = `<div class='border rounded-md overflow-hidden shadow'><img src='${n.img}' class='w-full h-40 object-cover'><div class='p-2 text-sm font-medium text-gray-700'>${n.title}</div></div>`;
+      container.appendChild(div);
+    });
   </script></body>
 </html>
