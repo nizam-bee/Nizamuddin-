@@ -1,15 +1,136 @@
-// pages/api/search.js (Next.js API route)
-import axios from 'axios';
-
-export default async function handler(req, res) {
-  const { q } = req.query;
-  const ddg = await axios.get('https://api.duckduckgo.com', {
-    params: { q, format: 'json', no_redirect: 1, no_html: 1 }
-  });
-  const results = ddg.data.RelatedTopics.map(item => ({
-    title: item.Text,
-    url: item.FirstURL,
-    snippet: item.Text
-  }));
-  res.status(200).json({ results });
-}
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>n.ai.in - Smarter Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background-color: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #1a73e8;
+    }
+    .signin {
+      font-size: 14px;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .search-container {
+      position: relative;
+      width: 90%;
+      max-width: 600px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 50px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    .camera-icon {
+      left: 15px;
+      width: 24px;
+      height: 24px;
+    }
+    .search-icon {
+      right: 15px;
+      width: 24px;
+      height: 24px;
+    }
+    .voice-icon {
+      position: absolute;
+      right: 45px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+    .news-section {
+      margin-top: 30px;
+      padding: 0 20px;
+      width: 100%;
+    }
+    .news-item {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .news-item img {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      background-color: #fff;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">n.ai.in</div>
+    <div class="signin">Sign In</div>
+  </header>
+  <main>
+    <div class="search-container">
+      <img src="https://cdn-icons-png.flaticon.com/512/685/685655.png" class="icon camera-icon" alt="Camera" />
+      <input type="text" id="searchInput" placeholder="Search smarter..." />
+      <img src="https://cdn-icons-png.flaticon.com/512/709/709586.png" class="icon voice-icon" alt="Voice" />
+      <img src="https://cdn-icons-png.flaticon.com/512/64/64673.png" class="icon search-icon" alt="Search" onclick="searchNow()" />
+    </div>
+    <div class="news-section">
+      <div class="news-item">
+        <strong>Breaking News:</strong> AI is changing the world!
+        <img src="https://source.unsplash.com/random/600x300/?technology" alt="News Image">
+      </div>
+      <div class="news-item">
+        <strong>Update:</strong> n.ai.in becomes the smartest search engine.
+        <img src="https://source.unsplash.com/random/600x301/?ai" alt="News Image">
+      </div>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 n.ai.in | Made in India 🇮🇳
+  </footer>
+  <script>
+    function searchNow() {
+      const query = document.getElementById('searchInput').value;
+      if (!query) return alert("Please enter a search query");
+      window.location.href = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+    }
+  </script>
+</body>
+</html>
