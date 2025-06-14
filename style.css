@@ -1,0 +1,41 @@
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+}
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  background: #1a73e8;
+  color: white;
+  padding: 10px 20px;
+}
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+.sign-in {
+  cursor: pointer;
+}
+.search-area {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+.search-area input {
+  padding: 10px;
+  font-size: 16px;
+  width: 60%;
+}
+.search-area button {
+  padding: 10px;
+  font-size: 18px;
+  margin-left: 5px;
+}
+.news {
+  padding: 20px;
+  background: white;
+  margin: 20px;
+  border-radius: 10px;
+}
