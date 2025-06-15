@@ -1,74 +1,63 @@
-// FILE STRUCTURE OVERVIEW: // /n-ai-in // ├── public // │   └── index.html // ├── src // │   ├── App.jsx // │   ├── main.jsx // │   ├── index.css // │   └── pages // │       ├── Home.jsx // │       └── SearchResults.jsx // ├── .env // ├── package.json // ├── vite.config.js // └── README.md
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FFAM AI Tool by Nizam</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
 
-// index.html
+  <header class="text-center py-6 bg-purple-600 text-white shadow">
+    <h1 class="text-3xl font-bold">FFAM AI Tool</h1>
+    <p class="text-sm mt-1">Create Android apps with AI – by Nizam</p>
+  </header>
 
-<!DOCTYPE html><html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>n.ai.in</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>// main.jsx import React from 'react'; import ReactDOM from 'react-dom/client'; import App from './App'; import './index.css';
+  <main class="max-w-xl mx-auto mt-10 px-4">
+    <label class="block mb-2 font-semibold text-lg">Enter your app idea:</label>
+    <textarea id="prompt" rows="4" class="w-full p-3 rounded border" placeholder="e.g. Create OTT app with Premium plans"></textarea>
 
-ReactDOM.createRoot(document.getElementById('root')).render( <React.StrictMode> <App /> </React.StrictMode> );
+    <button onclick="generatePreview()" class="mt-4 w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700">
+      Generate App
+    </button>
 
-// App.jsx import React from 'react'; import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; import Home from './pages/Home'; import SearchResults from './pages/SearchResults';
+    <div id="preview" class="mt-6 p-4 bg-white rounded shadow hidden">
+      <h2 class="font-bold text-lg mb-2">🧠 AI App Preview</h2>
+      <p id="previewText" class="text-sm text-gray-700">...</p>
+      <a id="downloadBtn" href="#" class="mt-4 inline-block bg-green-600 text-white p-3 rounded hover:bg-green-700">⬇️ Download .AAB</a>
+    </div>
+  </main>
 
-export default function App() { return ( <Router> <Routes> <Route path="/" element={<Home />} /> <Route path="/search" element={<SearchResults />} /> </Routes> </Router> ); }
+  <footer class="text-center py-4 mt-10 text-sm text-gray-500">
+    Made with ❤️ by Nizam · FFAM.ai · 2025
+  </footer>
 
-// pages/Home.jsx import React, { useState } from 'react'; import { useNavigate } from 'react-router-dom';
+  <script>
+    function generatePreview() {
+      const idea = document.getElementById('prompt').value.toLowerCase();
+      const preview = document.getElementById('preview');
+      const previewText = document.getElementById('previewText');
+      const downloadBtn = document.getElementById('downloadBtn');
 
-export default function Home() { const [query, setQuery] = useState(''); const navigate = useNavigate();
+      let link = "#";
+      let desc = "Default NM App";
 
-const handleSearch = (e) => { e.preventDefault(); if (query.trim()) { navigate(/search?q=${encodeURIComponent(query)}); } };
+      if (idea.includes("ott")) {
+        link = "https://pixeldrain.com/u/9qshg1zM"; // sample OTT .aab
+        desc = "Includes Home, Watch Movies, Premium plans";
+      } else if (idea.includes("quiz")) {
+        link = "https://pixeldrain.com/u/x13u47or"; // sample quiz .aab
+        desc = "Includes quiz questions, score system";
+      } else {
+        link = "https://pixeldrain.com/u/gj0d9vLT"; // default NM App
+        desc = "Default NM App bundle with language info";
+      }
 
-return ( <div className="home-container"> <div className="logo">n.<strong>ai.in</strong></div> <form onSubmit={handleSearch} className="search-form"> <input type="text" placeholder="Search smarter than Google..." value={query} onChange={(e) => setQuery(e.target.value)} className="search-input" /> <button type="submit" className="search-button">Search</button> </form> </div> ); }
+      previewText.innerText = "✅ " + desc;
+      downloadBtn.href = link;
+      preview.classList.remove("hidden");
+    }
+  </script>
 
-// pages/SearchResults.jsx import React, { useEffect, useState } from 'react'; import { useLocation } from 'react-router-dom'; import axios from 'axios';
-
-export default function SearchResults() { const [articles, setArticles] = useState([]); const [loading, setLoading] = useState(true); const [searchTime, setSearchTime] = useState(0);
-
-const location = useLocation(); const query = new URLSearchParams(location.search).get('q');
-
-useEffect(() => { const fetchNews = async () => { const start = performance.now(); try { const res = await axios.get( https://newsapi.org/v2/everything?q=${query}&pageSize=10&apiKey=${import.meta.env.VITE_NEWS_API_KEY} ); setArticles(res.data.articles); const end = performance.now(); setSearchTime(((end - start) / 1000).toFixed(2)); } catch (err) { console.error(err); } finally { setLoading(false); } }; fetchNews(); }, [query]);
-
-return ( <div className="results-container"> <h2>Results for "{query}" (in {searchTime} seconds)</h2> {loading ? ( <p>Loading...</p> ) : ( <div className="news-grid"> {articles.map((article, i) => ( <div className="news-card" key={i}> {article.urlToImage && <img src={article.urlToImage} alt="news" />} <h3>{article.title}</h3> <p>{article.description}</p> <a href={article.url} target="_blank" rel="noopener noreferrer"> Read more → </a> </div> ))} </div> )} </div> ); }
-
-// index.css body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; }
-
-.home-container { text-align: center; padding-top: 20vh; }
-
-.logo { font-size: 4rem; color: #0071f2; margin-bottom: 20px; }
-
-.search-form { display: flex; justify-content: center; }
-
-.search-input { width: 50%; padding: 12px; font-size: 1.2rem; border: 1px solid #ccc; border-radius: 24px 0 0 24px; }
-
-.search-button { padding: 12px 20px; font-size: 1.2rem; background-color: #0071f2; color: white; border: none; border-radius: 0 24px 24px 0; cursor: pointer; }
-
-.results-container { padding: 2rem; }
-
-.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 1rem; }
-
-.news-card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
-
-.news-card img { width: 100%; height: 180px; object-fit: cover; }
-
-.news-card h3 { font-size: 1.1rem; padding: 0.5rem; }
-
-.news-card p { padding: 0 0.5rem 0.5rem; color: #555; }
-
-.news-card a { display: block; padding: 0.5rem; color: #0071f2; text-decoration: none; font-weight: bold; }
-
-// .env VITE_NEWS_API_KEY=03c7f04c16124494b98a5bd26eced2cf
-
-// vite.config.js import { defineConfig } from 'vite'; import react from '@vitejs/plugin-react';
-
-export default defineConfig({ plugins: [react()], });
-
-// package.json { "name": "n-ai-in", "version": "1.0.0", "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" }, "dependencies": { "axios": "^1.6.7", "react": "^18.2.0", "react-dom": "^18.2.0", "react-router-dom": "^6.22.3" }, "devDependencies": { "@vitejs/plugin-react": 
-  "^4.0.4", "vite": "^5.2.0" } }
+</body>
+</html>
