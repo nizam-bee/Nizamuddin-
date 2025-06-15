@@ -1,161 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>n.ai.in - Smarter Search</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: #f2f2f2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
+// File: Results.jsx import React, { useEffect, useState } from 'react'; import { useSearchParams } from 'react-router-dom'; import axios from 'axios';
 
-    .top-bar {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 15px;
-    }
+const Results = () => { const [params] = useSearchParams(); const query = params.get('q'); const [aiAnswer, setAiAnswer] = useState(''); const [news, setNews] = useState([]); const [images, setImages] = useState([]); const [loading, setLoading] = useState(true);
 
-    .login-btn {
-      background: #0051ff;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
+useEffect(() => { const fetchData = async () => { setLoading(true); try { const aiRes = await axios.post( 'https://api.openai.com/v1/chat/completions', { model: 'gpt-4', messages: [{ role: 'user', content: query }], }, { headers: { Authorization: Bearer YOUR_OPENAI_KEY, }, } ); setAiAnswer(aiRes.data.choices[0].message.content);
 
-    .logo {
-      font-weight: bold;
-      font-size: 20px;
-      color: #000;
-    }
+const newsRes = await axios.get(
+      `https://newsapi.org/v2/everything?q=${query}&apiKey=03c7f04c16124494b98a5bd26eced2cf`
+    );
+    setNews(newsRes.data.articles.slice(0, 4));
 
-    .search-container {
-      display: flex;
-      align-items: center;
-      margin: 40px 0 20px;
-      background: white;
-      border-radius: 30px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 8px 20px;
-      width: 100%;
-      max-width: 500px;
-    }
+    const imgRes = await axios.get(
+      `https://api.unsplash.com/search/photos?page=1&query=${query}&client_id=YOUR_UNSPLASH_KEY`
+    );
+    setImages(imgRes.data.results);
 
-    .search-container input {
-      border: none;
-      outline: none;
-      font-size: 16px;
-      flex: 1;
-      padding: 10px;
-    }
+  } catch (error) {
+    console.error(error);
+  }
+  setLoading(false);
+};
+fetchData();
 
-    .search-container img {
-      width: 24px;
-      height: 24px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
+}, [query]);
 
-    .results {
-      margin-top: 20px;
-      width: 100%;
-      max-width: 500px;
-      font-size: 16px;
-      color: #333;
-    }
+return ( <div className="max-w-4xl mx-auto p-4"> <h2 className="text-sm text-gray-600 mb-2">Showing results for "{query}" in 0.41 seconds</h2>
 
-    .news-section {
-      margin-top: 30px;
-      width: 100%;
-      max-width: 600px;
-    }
+{loading && <p>Loading...</p>}
 
-    .news-card {
-      background: white;
-      margin-bottom: 16px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+  {!loading && aiAnswer && (
+    <div className="mb-6">
+      <h3 className="font-semibold text-lg mb-2">AI Answer</h3>
+      <p className="bg-gray-100 p-4 rounded whitespace-pre-wrap">{aiAnswer}</p>
+    </div>
+  )}
 
-    .news-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .news-card .content {
-      padding: 15px;
-    }
-
-    footer {
-      margin-top: 50px;
-      font-size: 14px;
-      color: #999;
-    }
-  </style>
-</head>
-<body>
-  <div class="top-bar">
-    <div class="logo">n.ai.in 🔍</div>
-    <button class="login-btn" onclick="alert('Login with n.ai.in coming soon')">Sign In</button>
-  </div>
-
-  <div class="search-container">
-    <input type="text" id="query" placeholder="Search anything smarter..." />
-    <img src="https://cdn-icons-png.flaticon.com/512/709/709592.png" onclick="search()" title="Search"/>
-    <img src="https://cdn-icons-png.flaticon.com/512/724/724715.png" title="Voice Search"/>
-    <img src="https://cdn-icons-png.flaticon.com/512/685/685655.png" title="Camera Search"/>
-  </div>
-
-  <div class="results" id="results">
-    <!-- Search results will appear here -->
-  </div>
-
-  <div class="news-section">
-    <div class="news-card">
-      <img src="https://source.unsplash.com/600x300/?tech,ai" />
-      <div class="content">
-        <strong>AI Changing the World</strong>
-        <p>Discover how artificial intelligence is revolutionizing industries from healthcare to finance.</p>
+  {!loading && news.length > 0 && (
+    <div className="mb-6">
+      <h3 className="font-semibold text-lg mb-2">News</h3>
+      <div className="grid gap-4">
+        {news.map((n, idx) => (
+          <a href={n.url} key={idx} className="block border p-3 rounded hover:bg-gray-50">
+            {n.urlToImage && <img src={n.urlToImage} className="w-full h-48 object-cover rounded mb-2" alt="news" />}
+            <h4 className="font-bold text-md">{n.title}</h4>
+            <p className="text-sm text-gray-600">{n.description}</p>
+          </a>
+        ))}
       </div>
     </div>
-    <div class="news-card">
-      <img src="https://source.unsplash.com/600x300/?news,technology" />
-      <div class="content">
-        <strong>Latest Tech Trends 2025</strong>
-        <p>Stay updated with the latest technology innovations and gadgets emerging in 2025.</p>
+  )}
+
+  {!loading && images.length > 0 && (
+    <div>
+      <h3 className="font-semibold text-lg mb-2">Images</h3>
+      <div className="grid grid-cols-2 gap-4">
+        {images.map((img, idx) => (
+          <img key={idx} src={img.urls.small} className="rounded shadow" alt="result" />
+        ))}
       </div>
     </div>
-  </div>
+  )}
+</div>
 
-  <footer>
-    n.ai.in — Smarter than Google. Built by Nizam.
-  </footer>
+); };
 
-  <script>
-    function search() {
-      const q = document.getElementById("query").value.toLowerCase();
-      const resultBox = document.getElementById("results");
-      if (q === "") {
-        resultBox.innerHTML = "<em>Please enter something to search.</em>";
-      } else if (q.includes("code")) {
-        resultBox.innerHTML = "<b>Here's a sample code:</b><br><code>console.log('Hello from n.ai.in!');</code>";
-      } else if (q.includes("weather")) {
-        resultBox.innerHTML = "Today's weather: 32°C Sunny (Sample Result)";
-      } else {
-        resultBox.innerHTML = `Result for <b>"${q}"</b>:<br>n.ai.in suggests: This is a smarter answer than Google.`;
-      }
-    }
-  </script>
-</body>
-</html>
+export defa
+ult Results;
