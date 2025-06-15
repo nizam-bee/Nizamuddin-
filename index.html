@@ -1,32 +1,22 @@
-// === package.json === { "name": "naiin-search", "version": "1.0.0", "private": true, "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" }, "dependencies": { "axios": "^1.6.7", "react": "^18.2.0", "react-dom": "^18.2.0", "react-router-dom": "^6.22.2" }, "devDependencies": { "vite": "^5.0.8" } }
+// App.jsx import React from 'react'; import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; import Home from './pages/Home'; import SearchResults from './pages/SearchResults';
 
-// === vite.config.js === import { defineConfig } from 'vite'; import react from '@vitejs/plugin-react';
+export default function App() { return ( <Router> <Routes> <Route path="/" element={<Home />} /> <Route path="/search" element={<SearchResults />} /> </Routes> </Router> ); }
 
-export default defineConfig({ plugins: [react()], });
-
-// === .env === VITE_NEWS_API_KEY=03c7f04c16124494b98a5bd26eced2cf
-
-// === index.html ===
-
-<!DOCTYPE html><html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>n.ai.in Search</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>// === src/main.jsx === import React from 'react'; import ReactDOM from 'react-dom/client'; import { BrowserRouter, Routes, Route } from 'react-router-dom'; import Home from './Home'; import Results from './Results'; import './style.css';
-
-ReactDOM.createRoot(document.getElementById('root')).render( <BrowserRouter> <Routes> <Route path="/" element={<Home />} /> <Route path="/search" element={<Results />} /> </Routes> </BrowserRouter> );
-
-// === src/Home.jsx === import React, { useState } from 'react'; import { useNavigate } from 'react-router-dom';
+// Home.jsx import React, { useState } from 'react'; import { useNavigate } from 'react-router-dom'; import './Home.css';
 
 export default function Home() { const [query, setQuery] = useState(''); const navigate = useNavigate();
 
 const handleSearch = (e) => { e.preventDefault(); if (query.trim()) { navigate(/search?q=${encodeURIComponent(query)}); } };
 
-return ( <div className="home-container"> <h1>n.ai.in</h1> <form onSubmit={handleSearch}> <input type="text" placeholder="Search..." value={query} onChange={(e) => setQuery(e.target.value)} /> <button type="submit">Search</button> </form> </
-                                                                                                                                                                                                                                                 div> ); }
+return ( <div className="home-container"> <h1 className="logo">n.ai.in</h1> <form onSubmit={handleSearch} className="search-form"> <input type="text" placeholder="Search anything smarter than Google..." value={query} onChange={(e) => setQuery(e.target.value)} className="search-input" /> <button type="submit" className="search-button">Search</button> </form> </div> ); }
+
+// SearchResults.jsx import React, { useEffect, useState } from 'react'; import { useLocation } from 'react-router-dom'; import axios from 'axios'; import './SearchResults.css';
+
+function useQuery() { return new URLSearchParams(useLocation().search); }
+
+export default function SearchResults() { const query = useQuery().get('q'); const [news, setNews] = useState([]); const [loading, setLoading] = useState(true); const [timeTaken, setTimeTaken] = useState(0);
+
+useEffect(() => { const fetchNews = async () => { const start = performance.now(); try { const res = await axios.get(https://newsapi.org/v2/everything?q=${query}&apiKey=${import.meta.env.VITE_NEWS_API_KEY}); setNews(res.data.articles.slice(0, 10)); } catch (error) { console.error('Failed to fetch news:', error); } finally { const end = performance.now(); setTimeTaken(((end - start) / 1000).toFixed(2)); setLoading(false); } }; if (query) fetchNews(); }, [query]);
+
+return ( <div className="results-container"> <h2>Results for "{query}" (in {timeTaken} seconds)</h2> {loading ? ( <p>Loading...</p> ) : ( <div className="news-grid"> {news.map((item, idx) => ( <div key={idx} className="news-card"> <img src={item.urlToImage} alt="thumbnail" /> <h3>{item.title}</h3> <p>{item.description}</p> <a href={item.url} target="_blank" rel="noreferrer">Read More</a> </div> ))} </div> )} </
+                                                                                                                                                                                                                                                                                                                                                                                                                              div> ); }
