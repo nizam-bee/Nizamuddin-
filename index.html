@@ -3,38 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yes NGPT - Testing Environment</title>
+    <title>Yes NGPT - Advanced AI Assistant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
         :root {
             --primary: #10a37f;
             --primary-light: #e6f4f1;
-            --primary-dark: #0d7a61;
             --text: #202123;
             --text-secondary: #565869;
             --border: #e5e7eb;
             --card-bg: #ffffff;
             --background: #f7f7f8;
-            --sidebar-bg: #ffffff;
-            --hover: #f5f5f6;
-            --success: #10a37f;
-            --warning: #f9a825;
-            --danger: #ef4146;
-            --info: #3b82f6;
         }
         
         body {
-            background-color: var(--background);
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
             color: var(--text);
-            line-height: 1.5;
+            margin: 0;
+            padding: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -42,7 +30,7 @@
         
         header {
             background: var(--card-bg);
-            padding: 16px 24px;
+            padding: 1rem 2rem;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -52,16 +40,15 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 18px;
-            font-weight: 700;
+            gap: 0.75rem;
+            font-weight: 600;
         }
         
         .logo-icon {
             width: 32px;
             height: 32px;
             background: var(--primary);
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,195 +56,73 @@
         }
         
         .container {
-            display: flex;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
             flex: 1;
-            padding: 20px;
-            gap: 20px;
         }
         
-        .test-panel {
-            width: 300px;
+        .welcome-section {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
             border: 1px solid var(--border);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
-        .test-panel h2 {
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
         }
         
-        .test-instructions {
-            background: var(--primary-light);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .test-instructions h3 {
-            margin-bottom: 10px;
-            color: var(--primary-dark);
-        }
-        
-        .test-instructions ol {
-            padding-left: 20px;
-        }
-        
-        .test-instructions li {
-            margin-bottom: 8px;
-        }
-        
-        .test-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .test-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            transition: all 0.3s;
         }
         
-        .test-btn:hover {
-            background: var(--primary-dark);
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         
-        .debug-console {
-            background: #2d2d2d;
-            color: #f0f0f0;
-            border-radius: 8px;
-            padding: 15px;
-            font-family: monospace;
-            height: 200px;
-            overflow-y: auto;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        
-        .debug-entry {
-            margin-bottom: 8px;
-        }
-        
-        .debug-timestamp {
-            color: #a0a0a0;
-            margin-right: 10px;
-        }
-        
-        .debug-message {
-            color: #4fc3f7;
-        }
-        
-        .debug-error {
-            color: #f44336;
-        }
-        
-        .debug-success {
-            color: #4caf50;
-        }
-        
-        .preview-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .preview-container {
-            flex: 1;
-            background: var(--card-bg);
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
             border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .preview-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .status-indicators {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .status-indicator {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            border-radius: 50px;
-            background: var(--background);
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
         }
         
-        .status-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        footer {
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
         
-        .status-active {
-            background: var(--success);
+        @media (max-width: 768px) {
+            .actions-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
         
-        .status-inactive {
-            background: var(--danger);
-        }
-        
-        .status-working {
-            background: var(--warning);
-        }
-        
-        .test-results {
-            margin-top: 20px;
-        }
-        
-        .test-results h3 {
-            margin-bottom: 10px;
-        }
-        
-        .result-item {
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .result-success {
-            background: rgba(76, 175, 80, 0.1);
-            color: #2e7d32;
-        }
-        
-        .result-failure {
-            background: rgba(244, 67, 54, 0.1);
-            color: #c62828;
-        }
-        
-        .result-pending {
-            background: rgba(255, 193, 7, 0.1);
-            color: #f57f17;
+        @media (max-width: 480px) {
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -267,281 +132,152 @@
             <div class="logo-icon">
                 <i class="fas fa-check"></i>
             </div>
-            <span>Yes NGPT - Testing Environment</span>
+            <span>Yes NGPT</span>
         </div>
         <div>
-            <button class="test-btn" id="run-tests">
-                <i class="fas fa-play"></i> Run All Tests
+            <button id="chrome-install" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                <i class="fab fa-chrome"></i> Add to Chrome
             </button>
         </div>
     </header>
 
     <div class="container">
-        <div class="test-panel">
-            <h2><i class="fas fa-vial"></i> Testing Instructions</h2>
-            
-            <div class="test-instructions">
-                <h3>How to Test Your Downloaded File</h3>
-                <ol>
-                    <li>Save the file as <code>index.html</code></li>
-                    <li>Place it in its own folder</li>
-                    <li>Double-click to open in browser</li>
-                    <li>Use the buttons below to test functionality</li>
-                    <li>Check for errors in the debug console</li>
-                </ol>
-            </div>
-            
-            <div class="test-actions">
-                <button class="test-btn" id="test-ui">
-                    <i class="fas fa-desktop"></i> Test UI Rendering
-                </button>
-                <button class="test-btn" id="test-actions">
-                    <i class="fas fa-mouse-pointer"></i> Test Action Cards
-                </button>
-                <button class="test-btn" id="test-chat">
-                    <i class="fas fa-comments"></i> Test Chat Interface
-                </button>
-                <button class="test-btn" id="test-search">
-                    <i class="fas fa-search"></i> Test Search Functionality
-                </button>
-                <button class="test-btn" id="test-ngpt">
-                    <i class="fas fa-brain"></i> Test NGPT Activation
-                </button>
-            </div>
-            
-            <div class="test-results">
-                <h3>Test Results</h3>
-                <div class="result-item result-pending">
-                    <i class="fas fa-clock"></i>
-                    <span>UI Rendering Test - Pending</span>
-                </div>
-                <div class="result-item result-pending">
-                    <i class="fas fa-clock"></i>
-                    <span>Action Cards Test - Pending</span>
-                </div>
-                <div class="result-item result-pending">
-                    <i class="fas fa-clock"></i>
-                    <span>Chat Interface Test - Pending</span>
-                </div>
-                <div class="result-item result-pending">
-                    <i class="fas fa-clock"></i>
-                    <span>Search Functionality Test - Pending</span>
-                </div>
-                <div class="result-item result-pending">
-                    <i class="fas fa-clock"></i>
-                    <span>NGPT Activation Test - Pending</span>
-                </div>
-            </div>
-            
-            <div class="debug-console">
-                <div class="debug-entry">
-                    <span class="debug-timestamp">[12:00:00]</span>
-                    <span class="debug-message">Testing environment initialized</span>
-                </div>
-                <div class="debug-entry">
-                    <span class="debug-timestamp">[12:00:00]</span>
-                    <span class="debug-message">Ready to run tests</span>
-                </div>
+        <div class="welcome-section">
+            <h1>Welcome to Yes NGPT</h1>
+            <p>Your advanced AI assistant with predictive intelligence and multi-modal capabilities.</p>
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary-light); color: var(--primary); padding: 0.5rem 1rem; border-radius: 50px; margin-top: 1rem;">
+                <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+                <span>Advanced Mode Activated</span>
             </div>
         </div>
+
+        <h2 style="margin-bottom: 1rem;">What can I help with?</h2>
         
-        <div class="preview-area">
-            <div class="preview-header">
-                <h2><i class="fas fa-eye"></i> Preview</h2>
-                <div class="status-indicators">
-                    <div class="status-indicator">
-                        <div class="status-dot status-active"></div>
-                        <span>UI Rendering</span>
-                    </div>
-                    <div class="status-indicator">
-                        <div class="status-dot status-inactive"></div>
-                        <span>Interaction</span>
-                    </div>
+        <div class="actions-grid">
+            <div class="action-card" data-feature="create">
+                <div class="action-icon">
+                    <i class="fas fa-image"></i>
                 </div>
+                <h3>Create Image</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Generate visuals from text</p>
             </div>
             
-            <div class="preview-container">
-                <iframe id="preview-frame" srcdoc="<html><body style='display:flex; align-items:center; justify-content:center; height:100%; background:#f7f7f8;'><div style='text-align:center;'><i class='fas fa-spinner fa-spin' style='font-size:48px; color:#10a37f;'></i><p style='margin-top:20px; font-size:18px;'>Loading Yes NGPT interface...</p></div></body></html>"></iframe>
+            <div class="action-card" data-feature="summarize">
+                <div class="action-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <h3>Summarize Text</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Condense long documents</p>
             </div>
             
-            <div class="test-actions" style="margin-top: 20px; flex-direction: row;">
-                <button class="test-btn" id="reload-preview">
-                    <i class="fas fa-sync-alt"></i> Reload Preview
-                </button>
-                <button class="test-btn" id="open-local">
-                    <i class="fas fa-folder-open"></i> Open Local File
-                </button>
-                <button class="test-btn" id="deploy-vercel">
-                    <i class="fas fa-cloud-upload-alt"></i> Deploy to Vercel
-                </button>
+            <div class="action-card" data-feature="plan">
+                <div class="action-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3>Make a Plan</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Create detailed schedules</p>
+            </div>
+            
+            <div class="action-card" data-feature="translate">
+                <div class="action-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h3>Translate</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Convert between languages</p>
+            </div>
+            
+            <div class="action-card" data-feature="email">
+                <div class="action-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Write Email</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Draft professional emails</p>
+            </div>
+            
+            <div class="action-card" data-feature="chat">
+                <div class="action-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Chat Assistant</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Continuous conversation</p>
+            </div>
+            
+            <div class="action-card" id="activate-ngpt">
+                <div class="action-icon" style="animation: pulse 1.5s infinite;">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h3>Yes NGPT</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Activate advanced mode</p>
+            </div>
+            
+            <div class="action-card" data-feature="ask">
+                <div class="action-icon">
+                    <i class="fas fa-question"></i>
+                </div>
+                <h3>Ask Anything</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Get answers to questions</p>
             </div>
         </div>
     </div>
 
+    <footer>
+        <p>Yes NGPT v2.5.1 | <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a></p>
+    </footer>
+
     <script>
-        // Get DOM elements
-        const previewFrame = document.getElementById('preview-frame');
-        const debugConsole = document.querySelector('.debug-console');
-        const testResults = document.querySelectorAll('.result-item');
-        
-        // Load the Yes NGPT HTML
-        function loadPreview() {
-            // This would be the HTML content of your downloaded file
-            const yesNGPTHtml = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yes NGPT - Advanced AI Assistant</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Your Yes NGPT CSS would be here */
-    </style>
-</head>
-<body>
-    <!-- Your Yes NGPT HTML would be here -->
-    
-    <script>
-        // Your Yes NGPT JavaScript would be here
-    <\/script>
-</body>
-</html>`;
+        // Feature activation
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const feature = this.getAttribute('data-feature') || 'ngpt';
+                const featureName = this.querySelector('h3').textContent;
+                showToast(`${featureName} activated`);
+            });
+        });
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.background = 'var(--primary)';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '6px';
+            toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            toast.style.zIndex = '1000';
+            toast.style.animation = 'fadeInOut 3s forwards';
             
-            // Create a Blob and load it in the iframe
-            const blob = new Blob([yesNGPTHtml], {type: 'text/html'});
-            const url = URL.createObjectURL(blob);
-            previewFrame.src = url;
+            document.body.appendChild(toast);
             
-            logDebug("Preview loaded successfully");
-            updateTestResult(0, 'success', "UI Rendering Test - Passed");
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
         }
-        
-        // Debug logging
-        function logDebug(message, type = 'message') {
-            const now = new Date();
-            const timestamp = `[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}]`;
-            
-            const entry = document.createElement('div');
-            entry.className = 'debug-entry';
-            
-            const tsSpan = document.createElement('span');
-            tsSpan.className = 'debug-timestamp';
-            tsSpan.textContent = timestamp;
-            
-            const msgSpan = document.createElement('span');
-            msgSpan.className = `debug-${type}`;
-            msgSpan.textContent = message;
-            
-            entry.appendChild(tsSpan);
-            entry.appendChild(msgSpan);
-            debugConsole.appendChild(entry);
-            
-            // Auto-scroll to bottom
-            debugConsole.scrollTop = debugConsole.scrollHeight;
-        }
-        
-        // Update test results
-        function updateTestResult(index, status, message) {
-            const resultItem = testResults[index];
-            resultItem.innerHTML = '';
-            
-            let icon, className;
-            
-            if (status === 'success') {
-                icon = '<i class="fas fa-check-circle"></i>';
-                className = 'result-success';
-            } else if (status === 'failure') {
-                icon = '<i class="fas fa-times-circle"></i>';
-                className = 'result-failure';
-            } else {
-                icon = '<i class="fas fa-clock"></i>';
-                className = 'result-pending';
+
+        // Chrome install button
+        document.getElementById('chrome-install').addEventListener('click', () => {
+            showToast("Redirecting to Chrome Web Store...");
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { opacity: 0.8; }
+                50% { opacity: 0.4; }
+                100% { opacity: 0.8; }
             }
-            
-            resultItem.className = `result-item ${className}`;
-            resultItem.innerHTML = `${icon} <span>${message}</span>`;
-        }
-        
-        // Test functions
-        function testUIRendering() {
-            logDebug("Testing UI rendering...");
-            // Simulate test
-            setTimeout(() => {
-                logDebug("UI rendering test completed successfully", "success");
-                updateTestResult(0, 'success', "UI Rendering Test - Passed");
-            }, 1500);
-        }
-        
-        function testActionCards() {
-            logDebug("Testing action cards...");
-            // Simulate test
-            setTimeout(() => {
-                logDebug("Action cards test completed successfully", "success");
-                updateTestResult(1, 'success', "Action Cards Test - Passed");
-            }, 1200);
-        }
-        
-        function testChatInterface() {
-            logDebug("Testing chat interface...");
-            // Simulate test
-            setTimeout(() => {
-                logDebug("Chat interface test completed successfully", "success");
-                updateTestResult(2, 'success', "Chat Interface Test - Passed");
-            }, 1800);
-        }
-        
-        function testSearchFunctionality() {
-            logDebug("Testing search functionality...");
-            // Simulate test
-            setTimeout(() => {
-                logDebug("Search functionality test completed successfully", "success");
-                updateTestResult(3, 'success', "Search Functionality Test - Passed");
-            }, 1000);
-        }
-        
-        function testNGPTActivation() {
-            logDebug("Testing NGPT activation...");
-            // Simulate test
-            setTimeout(() => {
-                logDebug("NGPT activation test completed successfully", "success");
-                updateTestResult(4, 'success', "NGPT Activation Test - Passed");
-            }, 2000);
-        }
-        
-        function runAllTests() {
-            logDebug("Starting all tests...");
-            testUIRendering();
-            testActionCards();
-            testChatInterface();
-            testSearchFunctionality();
-            testNGPTActivation();
-        }
-        
-        // Event listeners
-        document.getElementById('run-tests').addEventListener('click', runAllTests);
-        document.getElementById('test-ui').addEventListener('click', testUIRendering);
-        document.getElementById('test-actions').addEventListener('click', testActionCards);
-        document.getElementById('test-chat').addEventListener('click', testChatInterface);
-        document.getElementById('test-search').addEventListener('click', testSearchFunctionality);
-        document.getElementById('test-ngpt').addEventListener('click', testNGPTActivation);
-        document.getElementById('reload-preview').addEventListener('click', loadPreview);
-        
-        document.getElementById('open-local').addEventListener('click', () => {
-            logDebug("Opening local file...");
-            alert("In a real environment, this would open your file browser to select the HTML file");
-        });
-        
-        document.getElementById('deploy-vercel').addEventListener('click', () => {
-            logDebug("Deploying to Vercel...");
-            alert("In a real environment, this would guide you through Vercel deployment");
-        });
-        
-        // Initialize
-        window.onload = () => {
-            logDebug("Testing environment initialized");
-            loadPreview();
-        };
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
