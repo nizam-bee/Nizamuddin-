@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes NGPT - AI Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10a37f;
+            --primary-light: #e6f4f1;
+            --text: #202123;
+            --text-secondary: #565869;
+            --border: #e5e7eb;
+            --card-bg: #ffffff;
+            --background: #f7f7f8;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <span>Yes NGPT</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="background: var(--card-bg); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; text-align: center; border: 1px solid var(--border);">
+            <h1>Welcome to Yes NGPT</h1>
+            <p style="color: var(--text-secondary);">Your advanced AI assistant</p>
+        </div>
+
+        <h2 style="margin-bottom: 1rem;">What can I help with?</h2>
+        
+        <div class="actions-grid">
+            <div class="action-card">
+                <i class="fas fa-image" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h3>Create Image</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Generate visuals from text</p>
+            </div>
+            
+            <div class="action-card">
+                <i class="fas fa-file-contract" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h3>Summarize Text</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Condense long documents</p>
+            </div>
+            
+            <div class="action-card">
+                <i class="fas fa-calendar-check" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h3>Make a Plan</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Create detailed schedules</p>
+            </div>
+            
+            <div class="action-card">
+                <i class="fas fa-language" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h3>Translate</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Convert between languages</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Yes NGPT v2.5 | <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Simple interaction example
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const featureName = this.querySelector('h3').textContent;
+                alert(featureName + " feature activated!");
+            });
+        });
+    </script>
+</body>
+</html>
