@@ -455,6 +455,27 @@
             color: var(--text);
         }
         
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
         /* Chat Preview */
         .chat-preview {
             background: var(--card-bg);
@@ -543,7 +564,7 @@
             </div>
             <div class="search-bar">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search features...">
+                <input type="text" placeholder="Search features..." id="search-input">
             </div>
             <div class="user-profile">
                 <div class="avatar">JD</div>
@@ -567,7 +588,7 @@
                 <h2 class="section-title">What can I help with?</h2>
                 
                 <div class="actions-grid">
-                    <div class="action-card" onclick="activateFeature('create')">
+                    <div class="action-card" data-feature="create">
                         <div class="action-icon">
                             <i class="fas fa-image"></i>
                         </div>
@@ -575,7 +596,7 @@
                         <p>Generate visual content from text descriptions</p>
                     </div>
                     
-                    <div class="action-card" onclick="activateFeature('summarize')">
+                    <div class="action-card" data-feature="summarize">
                         <div class="action-icon">
                             <i class="fas fa-file-contract"></i>
                         </div>
@@ -583,7 +604,7 @@
                         <p>Condense long documents into key points</p>
                     </div>
                     
-                    <div class="action-card" onclick="activateFeature('plan')">
+                    <div class="action-card" data-feature="plan">
                         <div class="action-icon">
                             <i class="fas fa-calendar-check"></i>
                         </div>
@@ -591,7 +612,7 @@
                         <p>Create detailed schedules and project plans</p>
                     </div>
                     
-                    <div class="action-card" onclick="activateFeature('translate')">
+                    <div class="action-card" data-feature="translate">
                         <div class="action-icon">
                             <i class="fas fa-language"></i>
                         </div>
@@ -599,7 +620,7 @@
                         <p>Convert text between 50+ languages</p>
                     </div>
                     
-                    <div class="action-card" onclick="activateFeature('email')">
+                    <div class="action-card" data-feature="email">
                         <div class="action-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
@@ -607,7 +628,7 @@
                         <p>Draft professional emails instantly</p>
                     </div>
                     
-                    <div class="action-card" onclick="activateFeature('chat')">
+                    <div class="action-card" data-feature="chat">
                         <div class="action-icon">
                             <i class="fas fa-comments"></i>
                         </div>
@@ -615,7 +636,7 @@
                         <p>Continuous conversation with memory</p>
                     </div>
                     
-                    <div class="action-card" onclick="activateNGPT()">
+                    <div class="action-card" id="activate-ngpt">
                         <div class="action-icon icon-ngpt">
                             <i class="fas fa-check"></i>
                         </div>
@@ -623,7 +644,7 @@
                         <p>Activate advanced intelligence</p>
                     </div>
                     
-                    <div class="action-card" onclick="activateFeature('ask')">
+                    <div class="action-card" data-feature="ask">
                         <div class="action-icon">
                             <i class="fas fa-question"></i>
                         </div>
@@ -637,7 +658,7 @@
                         <img src="https://ui-avatars.com/api/?name=Yes+NGPT&background=10a37f&color=fff" alt="Yes NGPT">
                         <h3>Chat Preview</h3>
                     </div>
-                    <div class="chat-messages">
+                    <div class="chat-messages" id="chat-messages">
                         <div class="message user-message">
                             <strong>You:</strong> Can you help me create a marketing plan?
                         </div>
@@ -652,17 +673,4 @@
                         </div>
                     </div>
                     <div class="chat-input">
-                        <input type="text" placeholder="Type your message...">
-                        <button><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar">
-                <h2><i class="fas fa-chart-line"></i> Performance Dashboard</h2>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="value">98.2%</div>
-                        <div class="label">Accuracy</div>
-  
+                        <input type="text" placeholder="Type 
