@@ -745,4 +745,399 @@
                     <a href="#">Settings</a>
                 </div>
             </div>
+        </footer>
+    </div>
+    
+    <!-- Results Page -->
+    <div id="results-page" class="hidden">
+        <header>
+            <div class="results-header">
+                <div class="results-logo">n.ai.in</div>
+                <div class="results-search-container">
+                    <div class="search-box" style="border-radius: 8px; max-width: 692px;">
+                        <div class="search-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <input type="text" id="results-search-input" autocomplete="off">
+                        <div class="search-buttons">
+                            <div class="voice-icon">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <div class="camera-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-links" style="margin-left: 30px;">
+                    <div class="app-grid">
+                        <div class="app-icon">
+                            <i class="fas fa-th"></i>
+                        </div>
+                    </div>
+                    <div class="profile-icon" id="results-login-btn">N</div>
+                </div>
+            </div>
+        </header>
         
+        <div class="results-container">
+            <div class="result-stats" id="result-stats">About 257,000,000 results (0.38 seconds)</div>
+            
+            <div id="search-results">
+                <!-- Results will be populated here -->
+            </div>
+            
+            <div class="ai-insights">
+                <div class="ai-insights-title">
+                    <i class="fas fa-brain"></i>
+                    <h3>AI-Powered Insights</h3>
+                </div>
+                <div class="ai-features-grid">
+                    <div class="ai-feature">
+                        <div class="ai-feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div>AI has analyzed this topic across 15,230 research papers and industry reports</div>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>Interest in this topic has grown 78% in the last 6 months</div>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-feature-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div>Top experts: Dr. Alan Turing, Dr. Fei-Fei Li, Prof. Yoshua Bengio</div>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-feature-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div>Next breakthrough expected in 2024 based on current research trends</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-location">India</div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <a href="#">Help</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                Sign in to n.ai.in
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="your@email.com">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-login">Cancel</button>
+                <button class="btn btn-primary" id="submit-login">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const homePage = document.getElementById('home-page');
+        const resultsPage = document.getElementById('results-page');
+        const searchInput = document.getElementById('search-input');
+        const resultsSearchInput = document.getElementById('results-search-input');
+        const searchButton = document.getElementById('search-button');
+        const luckyButton = document.getElementById('lucky-button');
+        const loginButtons = document.querySelectorAll('#login-btn, #results-login-btn');
+        const loginModal = document.getElementById('login-modal');
+        const cancelLogin = document.getElementById('cancel-login');
+        const submitLogin = document.getElementById('submit-login');
+        const resultStats = document.getElementById('result-stats');
+        const searchResults = document.getElementById('search-results');
+        
+        // AI Knowledge Base - Real AI-related content
+        const aiKnowledgeBase = [
+            {
+                title: "Understanding Artificial Intelligence",
+                snippet: "Artificial Intelligence (AI) refers to the simulation of human intelligence in machines programmed to think like humans and mimic their actions. The term may also be applied to any machine that exhibits traits associated with a human mind such as learning and problem-solving.",
+                url: "https://n.ai.in/understanding-ai",
+                code: `function simulateAI(query) {\n  // Process natural language\n  const tokens = tokenize(query);\n  \n  // Understand context and intent\n  const context = analyzeContext(tokens);\n  \n  // Generate intelligent response\n  return generateResponse(context);\n}`,
+                features: [
+                    {icon: "star", text: "AI-powered summary available"},
+                    {icon: "bolt", text: "Real-time analysis"}
+                ]
+            },
+            {
+                title: "Machine Learning Fundamentals",
+                snippet: "Machine learning is a subset of AI that enables systems to learn and improve from experience without being explicitly programmed. It focuses on developing computer programs that can access data and use it to learn for themselves.",
+                url: "https://n.ai.in/machine-learning",
+                code: `from sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Load dataset\nX, y = load_data()\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\n\n# Train model\nmodel = RandomForestClassifier()\nmodel.fit(X_train, y_train)\n\n# Evaluate\naccuracy = model.score(X_test, y_test)`,
+                features: [
+                    {icon: "chart-line", text: "Interactive learning path"},
+                    {icon: "code", text: "Code examples"}
+                ]
+            },
+            {
+                title: "Deep Learning and Neural Networks",
+                snippet: "Deep learning is a machine learning technique that teaches computers to do what comes naturally to humans. Inspired by the human brain, deep learning models are built using neural networks with multiple layers (deep neural networks).",
+                url: "https://n.ai.in/deep-learning",
+                code: `import tensorflow as tf\nfrom tensorflow.keras import layers\n\n# Create a sequential model\nmodel = tf.keras.Sequential([\n  layers.Dense(64, activation='relu', input_shape=(784,)),\n  layers.Dense(64, activation='relu'),\n  layers.Dense(10, activation='softmax')\n])\n\n# Compile the model\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])`,
+                features: [
+                    {icon: "network-wired", text: "Neural network visualizer"},
+                    {icon: "robot", text: "AI-generated insights"}
+                ]
+            },
+            {
+                title: "Natural Language Processing",
+                snippet: "NLP is a branch of AI that helps computers understand, interpret and manipulate human language. NLP combines computational linguistics with statistical, machine learning, and deep learning models.",
+                url: "https://n.ai.in/nlp",
+                code: `import nltk\nfrom nltk.sentiment import SentimentIntensityAnalyzer\n\n# Initialize sentiment analyzer\nsia = SentimentIntensityAnalyzer()\n\n# Analyze text sentiment\ntext = "n.ai.in is revolutionizing search with AI!"\nsentiment = sia.polarity_scores(text)\n\n# Output: {'neg': 0.0, 'neu': 0.294, 'pos': 0.706, 'compound': 0.8012}`,
+                features: [
+                    {icon: "language", text: "Multilingual support"},
+                    {icon: "comments", text: "Conversational AI"}
+                ]
+            }
+        ];
+        
+        // Initialize with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set focus on search input
+            searchInput.focus();
+            
+            // Update dynamic data
+            updateDynamicData();
+        });
+        
+        // Event listeners
+        searchButton.addEventListener('click', performSearch);
+        luckyButton.addEventListener('click', performLuckySearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') performSearch();
+        });
+        
+        resultsSearchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') performSearchFromResults();
+        });
+        
+        loginButtons.forEach(button => {
+            button.addEventListener('click', showLoginModal);
+        });
+        
+        cancelLogin.addEventListener('click', hideLoginModal);
+        submitLogin.addEventListener('click', handleLogin);
+        
+        // Search function
+        function performSearch() {
+            const query = searchInput.value.trim();
+            
+            if (!query) return;
+            
+            // Show results page
+            homePage.classList.add('hidden');
+            resultsPage.classList.remove('hidden');
+            resultsSearchInput.value = query;
+            
+            // Perform search
+            executeSearch(query);
+        }
+        
+        // Lucky search function
+        function performLuckySearch() {
+            const luckyQueries = [
+                "What are the new and curious developments in AI?",
+                "Latest cricket scores and news",
+                "Weather forecast for my location",
+                "SSBCrack shop deals and offers",
+                "How n.ai.in is better than traditional search engines"
+            ];
+            const randomQuery = luckyQueries[Math.floor(Math.random() * luckyQueries.length)];
+            searchInput.value = randomQuery;
+            performSearch();
+        }
+        
+        // Search from results page
+        function performSearchFromResults() {
+            const query = resultsSearchInput.value.trim();
+            if (query) executeSearch(query);
+        }
+        
+        // Execute search (simulates backend)
+        function executeSearch(query) {
+            // Show loading state
+            searchResults.innerHTML = `
+                <div class="loading" style="text-align: center; padding: 40px; font-size: 18px; color: #5f6368;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 36px; margin-bottom: 20px; color: #1a73e8;"></i>
+                    <p>n.ai.in is analyzing your query with advanced AI...</p>
+                    <p>Searching through billions of documents</p>
+                </div>
+            `;
+            
+            // Simulate API call delay (0.4s response time)
+            setTimeout(() => {
+                // Generate results
+                const results = generateSearchResults(query);
+                
+                // Display results
+                displaySearchResults(results);
+                
+                // Update stats
+                const resultCount = Math.floor(Math.random() * 90000000) + 10000000;
+                const timeTaken = (Math.random() * 0.1 + 0.35).toFixed(2);
+                resultStats.textContent = `About ${resultCount.toLocaleString()} results (${timeTaken} seconds)`;
+            }, 400);
+        }
+        
+        // Generate search results
+        function generateSearchResults(query) {
+            const queryLower = query.toLowerCase();
+            
+            // Filter knowledge base for matching results
+            let filteredResults = aiKnowledgeBase.filter(item => {
+                return item.title.toLowerCase().includes(queryLower) || 
+                       item.snippet.toLowerCase().includes(queryLower);
+            });
+            
+            // If no exact matches, generate AI-powered results
+            if (filteredResults.length === 0) {
+                return [
+                    {
+                        title: `AI Analysis: ${query}`,
+                        snippet: `Our AI has analyzed "${query}" across multiple domains. According to our neural networks, this topic has a 92% relevance score to current AI research and shows increasing interest in academic circles.`,
+                        url: `https://n.ai.in/search?q=${encodeURIComponent(query)}`,
+                        code: `// AI analysis function for: ${query}\nfunction analyzeTopic(topic) {\n  const trends = fetchTrends(topic);\n  const relevance = calculateRelevance(trends);\n  const predictions = generatePredictions(trends);\n  \n  return {\n    relevance,\n    predictions,\n    keyInsights: extractKeyInsights(topic)\n  };\n}`,
+                        features: [
+                            {icon: "lightbulb", text: "AI-generated insights"},
+                            {icon: "project-diagram", text: "Topic relevance: 92%"}
+                        ]
+                    },
+                    {
+                        title: `${query} in Modern Applications`,
+                        snippet: `From healthcare to finance, ${query} is transforming industries. Our AI has identified 15,230 real-world applications and case studies demonstrating how ${query} is being implemented across sectors.`,
+                        url: `https://n.ai.in/applications-${query.replace(/\s+/g, '-')}`,
+                        features: [
+                            {icon: "industry", text: "Industry applications"},
+                            {icon: "chart-pie", text: "Market analysis"}
+                        ]
+                    },
+                    {
+                        title: `The Future of ${query}`,
+                        snippet: `Based on current research trends and technological advancements, our AI predicts that ${query} will see major breakthroughs in the next 3-5 years. Key areas of development include efficiency improvements and new application domains.`,
+                        url: `https://n.ai.in/future-${query.replace(/\s+/g, '-')}`,
+                        features: [
+                            {icon: "calendar", text: "5-year forecast"},
+                            {icon: "flask", text: "Research preview"}
+                        ]
+                    },
+                    {
+                        title: `Learning Resources for ${query}`,
+                        snippet: `Master ${query} with our AI-curated learning path. We've analyzed thousands of resources to bring you the most effective courses, tutorials, and research papers on this topic.`,
+                        url: `https://n.ai.in/learn-${query.replace(/\s+/g, '-')}`,
+                        code: `// Sample code for ${query}\nfunction ${query.replace(/\s+/g, '')}Example() {\n  // Initialize ${query} module\n  const module = require('${query.toLowerCase()}-ai');\n  \n  // Implement core functionality\n  const result = module.analyzeData(data);\n  \n  // Return insights\n  return result.insights;\n}`,
+                        features: [
+                            {icon: "graduation-cap", text: "Learning path"},
+                            {icon: "book", text: "Resource recommendations"}
+                        ]
+                    }
+                ];
+            }
+            
+            return filteredResults;
+        }
+        
+        // Display search results
+        function displaySearchResults(results) {
+            if (!results || results.length === 0) {
+                searchResults.innerHTML = '<p class="no-results">No results found. Try a different query.</p>';
+                return;
+            }
+            
+            let resultsHTML = '';
+            
+            results.forEach((result, index) => {
+                resultsHTML += `
+                    <div class="result-item">
+                        <div class="result-url">${result.url}</div>
+                        <a href="${result.url}" class="result-title">${result.title}</a>
+                        <div class="result-snippet">${result.snippet}</div>
+                        ${result.code ? `<div class="code-block">${result.code}</div>` : ''}
+                        <div class="result-features">
+                            ${result.features ? result.features.map(feature => `
+                                <div class="result-feature">
+                                    <i class="fas fa-${feature.icon}"></i>
+                                    <span>${feature.text}</span>
+                                </div>
+                            `).join('') : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            searchResults.innerHTML = resultsHTML;
+        }
+        
+        // Update dynamic data (cricket, weather)
+        function updateDynamicData() {
+            // Update cricket score
+            const slScore = Math.floor(Math.random() * 20) + 368;
+            const slOvers = (Math.random() * 5 + 93).toFixed(1);
+            document.querySelector('.cricket-score:first-child').textContent = `${slScore}/${Math.floor(Math.random() * 3) + 4} (${slOvers})`;
+            
+            // Update temperature
+            const temp = (Math.random() * 3 + 27).toFixed(0);
+            document.querySelector('.weather-temp').textContent = `${temp}°`;
+            
+            // Update humidity
+            const humidity = Math.floor(Math.random() * 10) + 20;
+            document.querySelector('.weather-details div:first-child').textContent = `Humidity: ${humidity}%`;
+        }
+        
+        // Show login modal
+        function showLoginModal() {
+            loginModal.style.display = 'flex';
+        }
+        
+        // Hide login modal
+        function hideLoginModal() {
+            loginModal.style.display = 'none';
+        }
+        
+        // Handle login
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (email && password) {
+                // In a real app, this would authenticate with a backend
+                alert(`Welcome to n.ai.in! You're now signed in as ${email}`);
+                hideLoginModal();
+                
+                // Update profile icon
+                document.querySelectorAll('.profile-icon').forEach(icon => {
+                    icon.textContent = email.charAt(0).toUpperCase();
+                });
+            } else {
+                alert('Please enter both email and password');
+            }
+        }
+        
+        // Update data every 30 seconds
+        setInterval(updateDynamicData, 30000);
+    </script>
+</body>
+</html>
