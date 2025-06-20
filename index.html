@@ -3,578 +3,746 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n.ai.in - Smarter Than Google</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
+    <title>n.ai.in - AI Search Engine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #4285f4;
-            --secondary: #34a853;
-            --accent: #ea4335;
-            --dark: #202124;
-            --light: #f8f9fa;
-            --gray: #5f6368;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #fff;
-            color: var(--dark);
+            background-color: #ffffff;
+            color: #202124;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            font-size: 14px;
+            line-height: 1.5;
         }
         
         /* Header Styles */
         header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
+            padding: 15px 20px;
             align-items: center;
-            padding: 15px 5%;
-            border-bottom: 1px solid #dfe1e5;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: rgba(0,0,0,0.87);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 5px;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            gap: 15px;
+            margin: 0 15px;
+        }
+        
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .app-icon:hover {
+            background-color: #f1f3f4;
+        }
+        
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a73e8, #4facfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            padding: 20px;
+            flex: 1;
         }
         
         .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary);
+            margin-bottom: 30px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 5px;
+            position: relative;
         }
         
-        .logo span {
-            color: var(--accent);
-            background: linear-gradient(45deg, var(--accent), var(--primary));
+        .logo-text {
+            font-size: 90px;
+            font-weight: 400;
+            background: linear-gradient(90deg, #1a73e8, #4facfe, #00f2fe);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
         }
         
-        .top-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        #language {
-            padding: 8px 15px;
-            border: 1px solid #dfe1e5;
-            border-radius: 24px;
-            background: white;
-            font-size: 14px;
-        }
-        
-        #loginBtn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 24px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
-        }
-        
-        #loginBtn:hover {
-            background: #3367d6;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(66, 133, 244, 0.4);
-        }
-        
-        /* Main Search Area */
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(120deg, #4285f4, #34a853);
-            color: white;
-            margin-bottom: 40px;
-        }
-        
-        .tagline {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+        .logo-text span {
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
-        .sub-tagline {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
+        .ai-badge {
+            color: #1a73e8;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: -20px;
+            align-self: flex-end;
+            margin-right: 10px;
+            background: rgba(26, 115, 232, 0.1);
+            padding: 3px 10px;
+            border-radius: 12px;
         }
         
+        /* Search Box */
         .search-container {
-            max-width: 700px;
-            margin: 0 auto 40px;
-            padding: 0 20px;
+            max-width: 584px;
+            width: 100%;
+            position: relative;
+            margin-bottom: 30px;
         }
         
         .search-box {
             display: flex;
+            align-items: center;
             border: 1px solid #dfe1e5;
-            border-radius: 30px;
-            padding: 10px 20px;
-            background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            border-radius: 24px;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
         }
         
-        .search-box:focus-within {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-            transform: translateY(-3px);
+        .search-box:hover, .search-box:focus-within {
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223,225,229,0);
         }
         
-        #query {
+        .search-icon {
+            color: #9aa0a6;
+            margin-right: 10px;
+        }
+        
+        #search-input {
             flex: 1;
             border: none;
             outline: none;
-            font-size: 18px;
-            padding: 10px;
+            font-size: 16px;
             background: transparent;
         }
         
         .search-buttons {
             display: flex;
             gap: 10px;
-            justify-content: center;
-            margin-top: 25px;
         }
         
-        .search-btn {
-            background: #f8f9fa;
-            border: 1px solid #f8f9fa;
-            padding: 12px 25px;
-            border-radius: 24px;
+        .voice-icon, .camera-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            color: var(--dark);
-            font-size: 16px;
-            transition: all 0.3s;
+            color: #4285f4;
+        }
+        
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .search-btn, .lucky-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            padding: 10px 16px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover, .lucky-btn:hover {
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            background-color: #f8f9fa;
+            border: 1px solid #dadce0;
+            color: #202124;
+        }
+        
+        /* Clipboard Section */
+        .clipboard-section {
+            max-width: 584px;
+            width: 100%;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #5f6368;
+            font-size: 13px;
+        }
+        
+        .clipboard-icon {
+            color: #1a73e8;
+        }
+        
+        /* Sports and Weather Section */
+        .info-cards {
+            max-width: 584px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .card-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #1a73e8;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .search-btn:hover {
-            border: 1px solid #dadce0;
-            background: #f1f3f4;
-            transform: translateY(-2px);
+        .cricket-info {
+            font-size: 15px;
+            color: #202124;
         }
         
-        .search-btn.primary {
-            background: var(--primary);
-            color: white;
-            border: none;
-            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.4);
+        .cricket-team {
+            font-weight: 500;
+            margin-top: 5px;
         }
         
-        .search-btn.primary:hover {
-            background: #3367d6;
-            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.6);
+        .cricket-score {
+            font-size: 13px;
+            color: #5f6368;
         }
         
-        /* Results Section */
-        #result {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 300px;
-        }
-        
-        .result-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-        }
-        
-        .result-title {
-            color: var(--primary);
-            font-size: 26px;
-            margin-bottom: 15px;
+        .weather-info {
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .result-content {
-            line-height: 1.7;
-            color: var(--dark);
-            font-size: 18px;
-        }
-        
-        .result-content p {
-            margin-bottom: 20px;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 50px;
-        }
-        
-        .spinner {
-            border: 5px solid rgba(66, 133, 244, 0.2);
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 25px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Features Section */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-            border: 1px solid #f0f0f0;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .feature-title {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .feature-desc {
-            color: var(--gray);
-            line-height: 1.6;
-        }
-        
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            background: white;
-            padding: 15px 0;
-            border-top: 1px solid #dadce0;
-            z-index: 100;
-        }
-        
-        .nav-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: none;
-            border: none;
-            color: var(--gray);
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 10px;
-        }
-        
-        .nav-btn.active {
-            color: var(--primary);
-            transform: translateY(-5px);
-        }
-        
-        .nav-btn.active .nav-icon {
-            background: rgba(66, 133, 244, 0.1);
-        }
-        
-        .nav-icon {
+        .weather-temp {
             font-size: 24px;
-            margin-bottom: 4px;
-            padding: 10px;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            font-weight: 400;
+        }
+        
+        .weather-details {
+            font-size: 13px;
+            color: #5f6368;
+        }
+        
+        /* Shop Section */
+        .shop-section {
+            max-width: 584px;
+            width: 100%;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            justify-content: space-between;
+        }
+        
+        .shop-title {
+            font-weight: 500;
+            color: #1a73e8;
+        }
+        
+        .shop-button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        /* Search Query Section */
+        .query-section {
+            max-width: 584px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f8f9fa;
+        }
+        
+        .query-text {
+            font-size: 16px;
+            color: #202124;
+        }
+        
+        .query-text span {
+            font-weight: 500;
+            color: #1a73e8;
+        }
+        
+        /* Results Page */
+        .results-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #dfe1e5;
+        }
+        
+        .results-logo {
+            font-size: 24px;
+            font-weight: 500;
+            background: linear-gradient(90deg, #1a73e8, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 30px;
+        }
+        
+        .results-search-container {
+            flex: 1;
+            max-width: 692px;
+        }
+        
+        .results-container {
+            max-width: 652px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .result-stats {
+            color: #70757a;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        
+        .result-item {
+            margin-bottom: 30px;
+        }
+        
+        .result-url {
+            color: #006621;
+            font-size: 14px;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+        
+        .result-title {
+            color: #1a0dab;
+            font-size: 20px;
+            font-weight: 400;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .result-title:hover {
+            text-decoration: underline;
+        }
+        
+        .result-snippet {
+            color: #4d5156;
+            line-height: 1.58;
+        }
+        
+        .ai-highlight {
+            background: #e8f0fe;
+            padding: 2px 0;
+            border-radius: 2px;
+        }
+        
+        .result-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            color: #1a73e8;
+            font-size: 14px;
+        }
+        
+        .code-block {
+            background: #f6f8fa;
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            border-left: 3px solid #1a73e8;
+        }
+        
+        .ai-insights {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .ai-insights-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1a73e8;
+            margin-bottom: 15px;
+        }
+        
+        .ai-features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .ai-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #e8f0fe;
+        }
+        
+        .ai-feature-icon {
+            color: #1a73e8;
         }
         
         /* Footer */
         footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: var(--dark);
-            color: rgba(255,255,255,0.7);
+            background: #f2f2f2;
+            padding: 0 20px;
             margin-top: auto;
         }
         
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .footer-location {
+            padding: 15px 30px;
+            border-bottom: 1px solid #dadce0;
+            color: #70757a;
+            font-size: 15px;
         }
         
-        .footer-logo {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: white;
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 15px 20px;
         }
         
-        .copyright {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+        .footer-links a {
+            color: #70757a;
+            text-decoration: none;
+            padding: 15px;
+            white-space: nowrap;
         }
         
-        /* Responsive Design */
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-section {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .tagline {
-                font-size: 1.8rem;
+            .logo-text {
+                font-size: 70px;
             }
             
-            .search-box {
-                padding: 8px 15px;
+            .footer-links {
+                justify-content: center;
             }
             
-            .search-buttons {
-                flex-wrap: wrap;
+            .footer-section {
+                justify-content: center;
             }
             
-            .search-btn {
-                padding: 10px 20px;
-            }
-            
-            header {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
-            }
-            
-            .logo {
-                font-size: 24px;
-            }
-            
-            .features {
+            .info-cards {
                 grid-template-columns: 1fr;
             }
             
-            .result-card {
-                padding: 20px;
+            .ai-features-grid {
+                grid-template-columns: 1fr;
             }
         }
         
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 50px;
+            }
+            
+            .ai-badge {
+                margin-top: -10px;
+                font-size: 14px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .search-btn, .lucky-btn {
+                width: 100%;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .results-logo {
+                display: none;
+            }
         }
         
-        .animate-in {
-            animation: fadeIn 0.6s ease-out forwards;
+        /* Hidden class for toggling */
+        .hidden {
+            display: none;
+        }
+        
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: #1a73e8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5f6368;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .input-group input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #dadce0;
+        }
+        
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-primary {
+            background: #1a73e8;
+            color: white;
+        }
+        
+        .btn:hover {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">n.<span>ai</span>.in</div>
-        <div class="top-right">
-            <select id="language">
-                <option value="en">🌐 English</option>
-                <option value="hi">🇮🇳 Hindi</option>
-                <option value="ur">🇵🇰 Urdu</option>
-                <option value="fr">🇫🇷 French</option>
-                <option value="es">🇪🇸 Spanish</option>
-            </select>
-            <button id="loginBtn">Login with Google</button>
-        </div>
-    </header>
-    
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1 class="tagline">The Search Engine <br><span style="font-size: 3rem; display: block; margin-top: 10px;">Smarter Than Google</span></h1>
-        <p class="sub-tagline">AI-powered answers, zero ads, and human-like understanding of your queries</p>
-    </section>
-    
-    <!-- Search Area -->
-    <section class="search-container">
-        <div class="search-box">
-            <input type="text" id="query" placeholder="Ask anything smarter..." autofocus>
-            <button class="voice-btn" style="background: none; border: none; font-size: 24px; cursor: pointer;">🎤</button>
-        </div>
-        
-        <div class="search-buttons">
-            <button class="search-btn primary" id="searchBtn">
-                <span>🔍</span> AI Search
-            </button>
-            <button class="search-btn" id="cameraBtn">
-                <span>📷</span> Camera Search
-            </button>
-            <button class="search-btn" id="feelingBtn">
-                <span>🎲</span> I'm Feeling Smart
-            </button>
-        </div>
-    </section>
-    
-    <!-- Results Area -->
-    <div id="result">
-        <div class="result-card animate-in">
-            <h2 class="result-title">🔍 Welcome to n.ai.in</h2>
-            <div class="result-content">
-                <p>n.ai.in provides smarter answers than traditional search engines with:</p>
-                <ul style="margin: 20px 0 20px 30px; line-height: 2;">
-                    <li>Direct AI-powered answers instead of links</li>
-                    <li>Natural language understanding of your queries</li>
-                    <li>Zero ads or sponsored results</li>
-                    <li>Multi-language support</li>
-                    <li>Context-aware responses</li>
-                </ul>
-                <p>Try searching: "Explain quantum computing" or "How to make pizza dough"</p>
+    <!-- Home Page -->
+    <div id="home-page">
+        <header>
+            <div class="nav-links">
+                <a href="#" id="gmail-link">Gmail</a>
+                <a href="#" id="images-link">Images</a>
+                <div class="app-grid">
+                    <div class="app-icon">
+                        <i class="fas fa-th"></i>
+                    </div>
+                </div>
+                <div class="profile-icon" id="login-btn">N</div>
             </div>
-        </div>
-    </div>
-    
-    <!-- Features Section -->
-    <section class="features">
-        <div class="feature-card animate-in">
-            <div class="feature-icon">🤖</div>
-            <h3 class="feature-title">AI-Powered Answers</h3>
-            <p class="feature-desc">Get direct, comprehensive answers instead of links. Our AI understands context and provides human-like responses.</p>
-        </div>
-        
-        <div class="feature-card animate-in">
-            <div class="feature-icon">🌐</div>
-            <h3 class="feature-title">Multi-Language Support</h3>
-            <p class="feature-desc">Search in over 20 languages with native-level understanding. Get accurate results regardless of language.</p>
-        </div>
-        
-        <div class="feature-card animate-in">
-            <div class="feature-icon">🚀</div>
-            <h3 class="feature-title">Faster Than Google</h3>
-            <p class="feature-desc">Get answers instantly without sifting through pages of results. Our AI delivers exactly what you need.</p>
-        </div>
-    </section>
-    
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <button class="nav-btn active">
-            <span class="nav-icon">🏠</span>
-            <span>Home</span>
-        </button>
-        <button class="nav-btn">
-            <span class="nav-icon">🔍</span>
-            <span>Search</span>
-        </button>
-        <button class="nav-btn">
-            <span class="nav-icon">📊</span>
-            <span>Activity</span>
-        </button>
-        <button class="nav-btn">
-            <span class="nav-icon">🔔</span>
-            <span>Alerts</span>
-        </button>
-        <button class="nav-btn">
-            <span class="nav-icon">🤖</span>
-            <span>AI Tools</span>
-        </button>
-    </nav>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">n.ai.in</div>
-            <p>The next-generation search engine powered by advanced AI</p>
-            <div class="copyright">
-                © 2025 <strong>n.ai.in</strong> — Built by <strong>JUBEDA</strong>, AI Powered by Nizam
+        </header>
+
+        <div class="main-content">
+            <div class="logo">
+                <div class="logo-text">n.<span>ai</span>.in</div>
+                <div class="ai-badge">AI-Powered Search</div>
             </div>
-        </div>
-    </footer>
-    
-    <script>
-        // AI Search Backend Simulation
-        const aiSearch = {
-            getAnswer: async (query) => {
-                // Simulate API call delay
-                await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input type="text" id="search-input" autocomplete="off" autofocus placeholder="Search n.ai.in or type a URL">
+                    <div class="search-buttons">
+                        <div class="voice-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <div class="camera-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="search-btn" id="search-button">Search</button>
+                <button class="lucky-btn" id="lucky-button">I'm Feeling Lucky</button>
+            </div>
+            
+            <!-- Clipboard Notification -->
+            <div class="clipboard-section">
+                <div class="clipboard-icon">
+                    <i class="fas fa-paste"></i>
+                </div>
+                <div>Google pasted from your clipboard</div>
+            </div>
+            
+            <!-- Sports and Weather Cards -->
+            <div class="info-cards">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-baseball-ball"></i>
+                        <span>Cricket: SL vs BAN</span>
+                    </div>
+                    <div class="cricket-info">
+                        <div>Tre... Stumps: Day 3</div>
+                        <div class="cricket-team">SL</div>
+                        <div class="cricket-score">368/4 (93)</div>
+                        <div class="cricket-team">BAN</div>
+                        <div class="cricket-score">495 (153.4)</div>
+                    </div>
+                </div>
                 
-                // Define responses for different queries
-                const responses = {
-                    "hello": {
-                        title: "Hello!",
-                        content: "Hello! I'm n.ai.in, your smarter-than-Google search assistant. How can I help you today?",
-                        sources: [
-                            {title: "AI Knowledge Base", url: "#"},
-                            {title: "Natural Language Processing Documentation", url: "#"}
-                        ]
-                    },
-                    "what is n.ai.in": {
-                        title: "About n.ai.in",
-                        content: "n.ai.in is an AI-powered search engine that provides smarter, more direct answers than traditional search engines. It uses advanced natural language processing to understand your queries and deliver precise information without the clutter of ads or sponsored results.<br><br>Unlike Google, n.ai.in focuses on understanding the intent behind your question and providing a comprehensive answer rather than just links to other sites.",
-                        sources: [
-                            {title: "About n.ai.in", url: "#"},
-                            {title: "AI Search Technology", url: "#"}
-                        ]
-                    },
-                    "how are you": {
-                        title: "System Status",
-                        content: "I'm just a program, but I'm functioning optimally! I'm ready to assist you with any questions or information needs you might have.<br><br>How can I help you today?",
-                        sources: [
-                            {title: "System Status", url: "#"}
-                        ]
-                    },
-                    "who created you": {
-                        title: "About Our Team",
-                        content: "I was created by JUBEDA with AI technology powered by Nizam. Our team consists of AI researchers, natural language processing experts, and search technology specialists with decades of combined experience.<br><br>Our mission is to create a search experience that's smarter, faster, and more intuitive than traditional search engines like Google.",
-                        sources: [
-                            {title: "Team Information", url: "#"},
-                            {title: "Company History", url: "#"}
-                        ]
-                    },
-                    "what is ai": {
-                        title: "Understanding Artificial Intelligence",
-                        content: "Artificial Intelligence (AI) is the simulation of human intelligence processes by machines, especially computer systems. These processes include learning, reasoning, and self-correction.<br><br>Key aspects of AI include:<ul><li>Machine Learning - systems that learn from data</li><li>Natural Language Processing - understanding human language</li><li>Computer Vision - interpreting visual information</li><li>Robotics - creating intelligent machines</li></ul>",
-                        sources: [
-                            {title: "AI Explained", url: "#"},
-                            {title: "Introduction to Artificial Intelligence", url: "#"}
-                        ]
-                    },
-                    "explain quantum computing": {
-                        title: "Quantum Computing Explained",
-                        content: "Quantum computing is an advanced computing paradigm that uses quantum-mechanical phenomena to perform operations on data. Unlike classical computers that use bits (0s and 1s), quantum computers use quantum bits or qubits.<br><br>Key features:<ul><li>Qubits can exist in multiple states simultaneously (superposition)</li><li>Quantum entanglement allows qubits to be correlated</li><li>Quantum gates manipulate qubits</li><li>Provides exponential speedup for certain problems</li></ul>Quantum computing has potential applications in cryptography, drug discovery, financial modeling, and AI.",
-                        sources: [
-                            {title: "Quantum Computing Overview", url: "#"},
-                            {title: "
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-cloud-sun"></i>
+                        <span>Warangal Weather</span>
+                    </div>
+                    <div class="weather-info">
+                        <div class="weather-temp">29°</div>
+                        <div class="weather-details">
+                            <div>Humidity: 25%</div>
+                            <div>Partly Cloudy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shop Section -->
+            <div class="shop-section">
+                <div class="shop-title">Shop SSBCrack</div>
+                <button class="shop-button">Visit Store</button>
+            </div>
+            
+            <!-- Query Section -->
+            <div class="query-section">
+                <div class="query-text">What are the <span>new and curious</span> of</div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-location">India</div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <a href="#">About</a>
+                    <a href="#">Advertising</a>
+                    <a href="#">Business</a>
+                    <a href="#">How Search works</a>
+                </div>
+                <div class="footer-section">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Settings</a>
+                </div>
+            </div>
+        
