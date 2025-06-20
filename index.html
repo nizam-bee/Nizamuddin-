@@ -1,42 +1,580 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>n.ai.in - Smarter Than Google</title>
-  <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n.ai.in - Smarter Than Google</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
+    <style>
+        :root {
+            --primary: #4285f4;
+            --secondary: #34a853;
+            --accent: #ea4335;
+            --dark: #202124;
+            --light: #f8f9fa;
+            --gray: #5f6368;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-bottom: 1px solid #dfe1e5;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        #language {
+            padding: 8px 15px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            background: white;
+            font-size: 14px;
+        }
+        
+        #loginBtn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+        }
+        
+        #loginBtn:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(66, 133, 244, 0.4);
+        }
+        
+        /* Main Search Area */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(120deg, #4285f4, #34a853);
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .tagline {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .sub-tagline {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .search-box {
+            display: flex;
+            border: 1px solid #dfe1e5;
+            border-radius: 30px;
+            padding: 10px 20px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .search-box:focus-within {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+        
+        #query {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            padding: 10px;
+            background: transparent;
+        }
+        
+        .search-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        
+        .search-btn {
+            background: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            padding: 12px 25px;
+            border-radius: 24px;
+            cursor: pointer;
+            color: var(--dark);
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .search-btn:hover {
+            border: 1px solid #dadce0;
+            background: #f1f3f4;
+            transform: translateY(-2px);
+        }
+        
+        .search-btn.primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.4);
+        }
+        
+        .search-btn.primary:hover {
+            background: #3367d6;
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.6);
+        }
+        
+        /* Results Section */
+        #result {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 300px;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+        
+        .result-title {
+            color: var(--primary);
+            font-size: 26px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .result-content {
+            line-height: 1.7;
+            color: var(--dark);
+            font-size: 18px;
+        }
+        
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(66, 133, 244, 0.2);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .feature-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .feature-desc {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 15px 0;
+            border-top: 1px solid #dadce0;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        
+        .nav-btn.active {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .nav-btn.active .nav-icon {
+            background: rgba(66, 133, 244, 0.1);
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+            padding: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--dark);
+            color: rgba(255,255,255,0.7);
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tagline {
+                font-size: 1.8rem;
+            }
+            
+            .search-box {
+                padding: 8px 15px;
+            }
+            
+            .search-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .search-btn {
+                padding: 10px 20px;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-card {
+                padding: 20px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo">n.ai.in</div>
-    <div class="search-box">
-      <input type="text" id="query" placeholder="Ask anything..." autofocus>
-      <button id="search-btn">🔍</button>
-      <button id="voice-btn">🎤</button>
+    <!-- Header -->
+    <header>
+        <div class="logo">n.<span>ai</span>.in</div>
+        <div class="top-right">
+            <select id="language">
+                <option value="en">🌐 English</option>
+                <option value="hi">🇮🇳 Hindi</option>
+                <option value="ur">🇵🇰 Urdu</option>
+                <option value="fr">🇫🇷 French</option>
+                <option value="es">🇪🇸 Spanish</option>
+            </select>
+            <button id="loginBtn">Login with Google</button>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="tagline">The Search Engine <br><span style="font-size: 3rem; display: block; margin-top: 10px;">Smarter Than Google</span></h1>
+        <p class="sub-tagline">AI-powered answers, zero ads, and human-like understanding of your queries</p>
+    </section>
+    
+    <!-- Search Area -->
+    <section class="search-container">
+        <div class="search-box">
+            <input type="text" id="query" placeholder="Ask anything smarter..." autofocus>
+            <button class="voice-btn" style="background: none; border: none; font-size: 24px; cursor: pointer;">🎤</button>
+        </div>
+        
+        <div class="search-buttons">
+            <button class="search-btn primary" id="searchBtn">
+                <span>🔍</span> AI Search
+            </button>
+            <button class="search-btn" id="cameraBtn">
+                <span>📷</span> Camera Search
+            </button>
+            <button class="search-btn" id="feelingBtn">
+                <span>🎲</span> I'm Feeling Smart
+            </button>
+        </div>
+    </section>
+    
+    <!-- Results Area -->
+    <div id="result">
+        <div class="result-card animate-in">
+            <h2 class="result-title">🔍 Welcome to n.ai.in</h2>
+            <div class="result-content">
+                <p>n.ai.in provides smarter answers than traditional search engines with:</p>
+                <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+                    <li>Direct AI-powered answers instead of links</li>
+                    <li>Natural language understanding of your queries</li>
+                    <li>Zero ads or sponsored results</li>
+                    <li>Multi-language support</li>
+                    <li>Context-aware responses</li>
+                </ul>
+                <p>Try searching: "Explain quantum computing" or "How to make pizza dough"</p>
+            </div>
+        </div>
     </div>
-    <div class="user-menu">
-      <button id="login-btn">Sign In</button>
-    </div>
-  </header>
-
-  <nav class="tabs">
-    <button class="tab active">All</button>
-    <button class="tab">News</button>
-    <button class="tab">Images</button>
-    <button class="tab">Videos</button>
-  </nav>
-
-  <main id="results">
-    <div class="welcome-msg">
-      <h2>Search smarter with n.ai.in</h2>
-      <p>Try: "Explain AI like I'm 5" or "Latest tech news"</p>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2024 n.ai.in - The Google alternative powered by AI</p>
-  </footer>
-
-  <script src="/app.js"></script>
-</body>
-</html>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-card animate-in">
+            <div class="feature-icon">🤖</div>
+            <h3 class="feature-title">AI-Powered Answers</h3>
+            <p class="feature-desc">Get direct, comprehensive answers instead of links. Our AI understands context and provides human-like responses.</p>
+        </div>
+        
+        <div class="feature-card animate-in">
+            <div class="feature-icon">🌐</div>
+            <h3 class="feature-title">Multi-Language Support</h3>
+            <p class="feature-desc">Search in over 20 languages with native-level understanding. Get accurate results regardless of language.</p>
+        </div>
+        
+        <div class="feature-card animate-in">
+            <div class="feature-icon">🚀</div>
+            <h3 class="feature-title">Faster Than Google</h3>
+            <p class="feature-desc">Get answers instantly without sifting through pages of results. Our AI delivers exactly what you need.</p>
+        </div>
+    </section>
+    
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </button>
+        <button class="nav-btn">
+            <span class="nav-icon">🔍</span>
+            <span>Search</span>
+        </button>
+        <button class="nav-btn">
+            <span class="nav-icon">📊</span>
+            <span>Activity</span>
+        </button>
+        <button class="nav-btn">
+            <span class="nav-icon">🔔</span>
+            <span>Alerts</span>
+        </button>
+        <button class="nav-btn">
+            <span class="nav-icon">🤖</span>
+            <span>AI Tools</span>
+        </button>
+    </nav>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">n.ai.in</div>
+            <p>The next-generation search engine powered by advanced AI</p>
+            <div class="copyright">
+                © 2025 <strong>n.ai.in</strong> — Built by <strong>JUBEDA</strong>, AI Powered by Nizam
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // AI Search Backend Simulation
+        const aiSearch = {
+            getAnswer: async (query) => {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Define responses for different queries
+                const responses = {
+                    "hello": {
+                        title: "Hello!",
+                        content: "Hello! I'm n.ai.in, your smarter-than-Google search assistant. How can I help you today?",
+                        sources: [
+                            {title: "AI Knowledge Base", url: "#"},
+                            {title: "Natural Language Processing Documentation", url: "#"}
+                        ]
+                    },
+                    "what is n.ai.in": {
+                        title: "About n.ai.in",
+                        content: "n.ai.in is an AI-powered search engine that provides smarter, more direct answers than traditional search engines. It uses advanced natural language processing to understand your queries and deliver precise information without the clutter of ads or sponsored results.<br><br>Unlike Google, n.ai.in focuses on understanding the intent behind your question and providing a comprehensive answer rather than just links to other sites.",
+                        sources: [
+                            {title: "About n.ai.in", url: "#"},
+                            {title: "AI Search Technology", url: "#"}
+                        ]
+                    },
+                    "how are you": {
+                        title: "System Status",
+                        content: "I'm just a program, but I'm functioning optimally! I'm ready to assist you with any questions or information needs you might have.<br><br>How can I help you today?",
+                        sources: [
+                            {title: "System Status", url: "#"}
+                        ]
+                    },
+                    "who created you": {
+                        title: "About Our Team",
+                        content: "I was created by JUBEDA with AI technology powered by Nizam. Our team consists of AI researchers, natural language processing experts, and search technology specialists with decades of combined experience.<br><br>Our mission is to create a search experience that's smarter, faster, and more intuitive than traditional search engines like Google.",
+                        sources: [
+                            {title: "Team Information", url: "#"},
+                            {title: "Company History", url: "#"}
+                        ]
+                    },
+                    "what is ai": {
+                        title: "Understanding Artificial Intelligence",
+                        content: "Artificial Intelligence (AI) is the simulation of human intelligence processes by machines, especially computer systems. These processes include learning, reasoning, and self-correction.<br><br>Key aspects of AI include:<ul><li>Machine Learning - systems that learn from data</li><li>Natural Language Processing - understanding human language</li><li>Computer Vision - interpreting visual information</li><li>Robotics - creating intelligent machines</li></ul>",
+                        sources: [
+                            {title: "AI Explained", url: "#"},
+                            {title: "Introduction to Artificial Intelligence", url: "#"}
+                        ]
+                    },
+                    "explain quantum computing": {
+                        title: "Quantum Computing Explained",
+                        content: "Quantum computing is an advanced computing paradigm that uses quantum-mechanical phenomena to perform operations on data. Unlike classical computers that use bits (0s and 1s), quantum computers use quantum bits or qubits.<br><br>Key features:<ul><li>Qubits can exist in multiple states simultaneously (superposition)</li><li>Quantum entanglement allows qubits to be correlated</li><li>Quantum gates manipulate qubits</li><li>Provides exponential speedup for certain problems</li></ul>Quantum computing has potential applications in cryptography, drug discovery, financial modeling, and AI.",
+                        sources: [
+                            {title: "Quantum Computing Overview", url: "#"},
+                            {title: "
