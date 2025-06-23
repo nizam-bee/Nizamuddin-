@@ -1,1143 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n.ai.in - AI Search Engine</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #ffffff;
-            color: #202124;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Header Styles */
-        header {
-            display: flex;
-            justify-content: flex-end;
-            padding: 15px 20px;
-            align-items: center;
-        }
-        
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .nav-links a {
-            color: rgba(0,0,0,0.87);
-            text-decoration: none;
-            font-size: 13px;
-            padding: 5px;
-        }
-        
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-        
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            gap: 15px;
-            margin: 0 15px;
-        }
-        
-        .app-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .app-icon:hover {
-            background-color: #f1f3f4;
-        }
-        
-        .profile-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1a73e8, #4facfe);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        /* Main Content */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-            padding: 20px;
-            flex: 1;
-        }
-        
-        .logo {
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-        
-        .logo-text {
-            font-size: 90px;
-            font-weight: 400;
-            background: linear-gradient(90deg, #1a73e8, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-        }
-        
-        .logo-text span {
-            font-weight: 700;
-        }
-        
-        .ai-badge {
-            color: #1a73e8;
-            font-size: 16px;
-            font-weight: 500;
-            margin-top: -20px;
-            align-self: flex-end;
-            margin-right: 10px;
-            background: rgba(26, 115, 232, 0.1);
-            padding: 3px 10px;
-            border-radius: 12px;
-        }
-        
-        /* Search Box */
-        .search-container {
-            max-width: 584px;
-            width: 100%;
-            position: relative;
-            margin-bottom: 30px;
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            border: 1px solid #dfe1e5;
-            border-radius: 24px;
-            padding: 10px 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .search-box:hover, .search-box:focus-within {
-            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
-            border-color: rgba(223,225,229,0);
-        }
-        
-        .search-icon {
-            color: #9aa0a6;
-            margin-right: 10px;
-        }
-        
-        #search-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            background: transparent;
-        }
-        
-        .search-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .voice-icon, .camera-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #4285f4;
-        }
-        
-        /* Buttons */
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-        
-        .search-btn, .lucky-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #f8f9fa;
-            border-radius: 4px;
-            color: #3c4043;
-            padding: 10px 16px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        
-        .search-btn:hover, .lucky-btn:hover {
-            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-            background-color: #f8f9fa;
-            border: 1px solid #dadce0;
-            color: #202124;
-        }
-        
-        /* Clipboard Section */
-        .clipboard-section {
-            max-width: 584px;
-            width: 100%;
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #5f6368;
-            font-size: 13px;
-        }
-        
-        .clipboard-icon {
-            color: #1a73e8;
-        }
-        
-        /* Sports and Weather Section */
-        .info-cards {
-            max-width: 584px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        
-        .card-title {
-            font-weight: 500;
-            margin-bottom: 10px;
-            color: #1a73e8;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .cricket-info {
-            font-size: 15px;
-            color: #202124;
-        }
-        
-        .cricket-team {
-            font-weight: 500;
-            margin-top: 5px;
-        }
-        
-        .cricket-score {
-            font-size: 13px;
-            color: #5f6368;
-        }
-        
-        .weather-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .weather-temp {
-            font-size: 24px;
-            font-weight: 400;
-        }
-        
-        .weather-details {
-            font-size: 13px;
-            color: #5f6368;
-        }
-        
-        /* Shop Section */
-        .shop-section {
-            max-width: 584px;
-            width: 100%;
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .shop-title {
-            font-weight: 500;
-            color: #1a73e8;
-        }
-        
-        .shop-button {
-            background: #1a73e8;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        
-        /* Search Query Section */
-        .query-section {
-            max-width: 584px;
-            width: 100%;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            background: #f8f9fa;
-        }
-        
-        .query-text {
-            font-size: 16px;
-            color: #202124;
-        }
-        
-        .query-text span {
-            font-weight: 500;
-            color: #1a73e8;
-        }
-        
-        /* Results Page */
-        .results-header {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #dfe1e5;
-        }
-        
-        .results-logo {
-            font-size: 24px;
-            font-weight: 500;
-            background: linear-gradient(90deg, #1a73e8, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-right: 30px;
-        }
-        
-        .results-search-container {
-            flex: 1;
-            max-width: 692px;
-        }
-        
-        .results-container {
-            max-width: 652px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .result-stats {
-            color: #70757a;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-        
-        .result-item {
-            margin-bottom: 30px;
-        }
-        
-        .result-url {
-            color: #006621;
-            font-size: 14px;
-            line-height: 1.3;
-            margin-bottom: 5px;
-        }
-        
-        .result-title {
-            color: #1a0dab;
-            font-size: 20px;
-            font-weight: 400;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-        }
-        
-        .result-title:hover {
-            text-decoration: underline;
-        }
-        
-        .result-snippet {
-            color: #4d5156;
-            line-height: 1.58;
-        }
-        
-        .ai-highlight {
-            background: #e8f0fe;
-            padding: 2px 0;
-            border-radius: 2px;
-        }
-        
-        .result-feature {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            color: #1a73e8;
-            font-size: 14px;
-        }
-        
-        .code-block {
-            background: #f6f8fa;
-            border-radius: 6px;
-            padding: 16px;
-            margin-top: 10px;
-            font-family: monospace;
-            font-size: 14px;
-            overflow-x: auto;
-            border-left: 3px solid #1a73e8;
-        }
-        
-        .ai-insights {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-            border-left: 4px solid #1a73e8;
-        }
-        
-        .ai-insights-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #1a73e8;
-            margin-bottom: 15px;
-        }
-        
-        .ai-features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .ai-feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            background: #e8f0fe;
-        }
-        
-        .ai-feature-icon {
-            color: #1a73e8;
-        }
-        
-        /* Footer */
-        footer {
-            background: #f2f2f2;
-            padding: 0 20px;
-            margin-top: auto;
-        }
-        
-        .footer-location {
-            padding: 15px 30px;
-            border-bottom: 1px solid #dadce0;
-            color: #70757a;
-            font-size: 15px;
-        }
-        
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            padding: 15px 20px;
-        }
-        
-        .footer-links a {
-            color: #70757a;
-            text-decoration: none;
-            padding: 15px;
-            white-space: nowrap;
-        }
-        
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        
-        .footer-section {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .logo-text {
-                font-size: 70px;
-            }
-            
-            .footer-links {
-                justify-content: center;
-            }
-            
-            .footer-section {
-                justify-content: center;
-            }
-            
-            .info-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .ai-features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .logo-text {
-                font-size: 50px;
-            }
-            
-            .ai-badge {
-                margin-top: -10px;
-                font-size: 14px;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .search-btn, .lucky-btn {
-                width: 100%;
-            }
-            
-            .nav-links {
-                gap: 10px;
-            }
-            
-            .results-logo {
-                display: none;
-            }
-        }
-        
-        /* Hidden class for toggling */
-        .hidden {
-            display: none;
-        }
-        
-        /* Login Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            overflow: hidden;
-        }
-        
-        .modal-header {
-            background: #1a73e8;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 500;
-        }
-        
-        .modal-body {
-            padding: 30px;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #5f6368;
-            font-weight: 500;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        
-        .input-group input:focus {
-            border-color: #1a73e8;
-            outline: none;
-        }
-        
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            padding: 20px;
-            background: #f8f9fa;
-            border-top: 1px solid #dadce0;
-        }
-        
-        .btn {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        
-        .btn-secondary {
-            background: #f8f9fa;
-            color: #1a73e8;
-            margin-right: 10px;
-        }
-        
-        .btn-primary {
-            background: #1a73e8;
-            color: white;
-        }
-        
-        .btn:hover {
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <!-- Home Page -->
-    <div id="home-page">
-        <header>
-            <div class="nav-links">
-                <a href="#" id="gmail-link">Gmail</a>
-                <a href="#" id="images-link">Images</a>
-                <div class="app-grid">
-                    <div class="app-icon">
-                        <i class="fas fa-th"></i>
-                    </div>
-                </div>
-                <div class="profile-icon" id="login-btn">N</div>
-            </div>
-        </header>
-
-        <div class="main-content">
-            <div class="logo">
-                <div class="logo-text">n.<span>ai</span>.in</div>
-                <div class="ai-badge">AI-Powered Search</div>
-            </div>
-            
-            <div class="search-container">
-                <div class="search-box">
-                    <div class="search-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <input type="text" id="search-input" autocomplete="off" autofocus placeholder="Search n.ai.in or type a URL">
-                    <div class="search-buttons">
-                        <div class="voice-icon">
-                            <i class="fas fa-microphone"></i>
-                        </div>
-                        <div class="camera-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="action-buttons">
-                <button class="search-btn" id="search-button">Search</button>
-                <button class="lucky-btn" id="lucky-button">I'm Feeling Lucky</button>
-            </div>
-            
-            <!-- Clipboard Notification -->
-            <div class="clipboard-section">
-                <div class="clipboard-icon">
-                    <i class="fas fa-paste"></i>
-                </div>
-                <div>Google pasted from your clipboard</div>
-            </div>
-            
-            <!-- Sports and Weather Cards -->
-            <div class="info-cards">
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-baseball-ball"></i>
-                        <span>Cricket: SL vs BAN</span>
-                    </div>
-                    <div class="cricket-info">
-                        <div>Tre... Stumps: Day 3</div>
-                        <div class="cricket-team">SL</div>
-                        <div class="cricket-score">368/4 (93)</div>
-                        <div class="cricket-team">BAN</div>
-                        <div class="cricket-score">495 (153.4)</div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-cloud-sun"></i>
-                        <span>Warangal Weather</span>
-                    </div>
-                    <div class="weather-info">
-                        <div class="weather-temp">29°</div>
-                        <div class="weather-details">
-                            <div>Humidity: 25%</div>
-                            <div>Partly Cloudy</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Shop Section -->
-            <div class="shop-section">
-                <div class="shop-title">Shop SSBCrack</div>
-                <button class="shop-button">Visit Store</button>
-            </div>
-            
-            <!-- Query Section -->
-            <div class="query-section">
-                <div class="query-text">What are the <span>new and curious</span> of</div>
-            </div>
-        </div>
-
-        <footer>
-            <div class="footer-location">India</div>
-            <div class="footer-links">
-                <div class="footer-section">
-                    <a href="#">About</a>
-                    <a href="#">Advertising</a>
-                    <a href="#">Business</a>
-                    <a href="#">How Search works</a>
-                </div>
-                <div class="footer-section">
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Settings</a>
-                </div>
-            </div>
-        </footer>
+<div class="naiin-container" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color: white; border-radius: 15px;">
+  <!-- Header -->
+  <div style="text-align: center; margin-bottom: 30px;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px;">
+      <div style="font-size: 42px; color: #00d2ff; background: rgba(0,0,0,0.3); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #00d2ff;">
+        <i class="fas fa-bolt"></i>
+      </div>
+      <h1 style="font-size: 42px; font-weight: 800; background: linear-gradient(to right, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;">n.ai.in</h1>
     </div>
+    <p style="color: #a0d2eb; font-size: 18px;">World's fastest AI search - 0.1s response time</p>
+  </div>
+
+  <!-- Search Box -->
+  <div style="background: rgba(255,255,255,0.08); border-radius: 20px; padding: 25px; margin-bottom: 30px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <input type="text" id="naiin-search-input" placeholder="Ask anything..." style="flex: 1; padding: 15px 20px; border: none; border-radius: 50px; font-size: 16px; background: rgba(0,0,0,0.4); color: white; border: 1px solid rgba(255,255,255,0.1); outline: none;">
+      <button id="naiin-search-btn" style="background: linear-gradient(to right, #00d2ff, #3a7bd5); border: none; border-radius: 50px; padding: 0 25px; color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-search"></i> Search
+      </button>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+      <button class="naiin-quick-btn" data-query="cricket live score" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); padding: 8px 15px; border-radius: 50px; font-size: 14px; cursor: pointer;">Cricket Live</button>
+      <button class="naiin-quick-btn" data-query="weather today" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); padding: 8px 15px; border-radius: 50px; font-size: 14px; cursor: pointer;">Weather</button>
+      <button class="naiin-quick-btn" data-query="latest tech news" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); padding: 8px 15px; border-radius: 50px; font-size: 14px; cursor: pointer;">Tech News</button>
+    </div>
+  </div>
+
+  <!-- Results Container -->
+  <div id="naiin-results" style="display: none; background: rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.1);">
+    <!-- Results will appear here -->
+  </div>
+
+  <!-- Features Section -->
+  <div style="margin-top: 40px;">
+    <h2 style="text-align: center; color: #00d2ff; margin-bottom: 20px;">Why n.ai.in is Better Than Google</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+      <div style="background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="color: #00d2ff; margin-bottom: 10px;"><i class="fas fa-bolt"></i> 0.1s Response Time</h3>
+        <p style="color: #a0d2eb;">10x faster than Google's average 1-second response</p>
+      </div>
+      <div style="background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="color: #00d2ff; margin-bottom: 10px;"><i class="fas fa-robot"></i> AI Answers</h3>
+        <p style="color: #a0d2eb;">GPT-4 powered summaries instead of just links</p>
+      </div>
+      <div style="background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="color: #00d2ff; margin-bottom: 10px;"><i class="fas fa-shield-alt"></i> No Tracking</h3>
+        <p style="color: #a0d2eb;">Privacy-focused with zero ads or user profiling</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+// Search functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('naiin-search-input');
+  const searchBtn = document.getElementById('naiin-search-btn');
+  const quickBtns = document.querySelectorAll('.naiin-quick-btn');
+  const resultsContainer = document.getElementById('naiin-results');
+  
+  // Focus input on load
+  searchInput.focus();
+  
+  // Handle search button
+  searchBtn.addEventListener('click', performSearch);
+  searchInput.addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') performSearch();
+  });
+  
+  // Quick buttons
+  quickBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      searchInput.value = this.getAttribute('data-query');
+      performSearch();
+    });
+  });
+  
+  // Perform search
+  function performSearch() {
+    const query = searchInput.value.trim();
+    if(!query) return;
     
-    <!-- Results Page -->
-    <div id="results-page" class="hidden">
-        <header>
-            <div class="results-header">
-                <div class="results-logo">n.ai.in</div>
-                <div class="results-search-container">
-                    <div class="search-box" style="border-radius: 8px; max-width: 692px;">
-                        <div class="search-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <input type="text" id="results-search-input" autocomplete="off">
-                        <div class="search-buttons">
-                            <div class="voice-icon">
-                                <i class="fas fa-microphone"></i>
-                            </div>
-                            <div class="camera-icon">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nav-links" style="margin-left: 30px;">
-                    <div class="app-grid">
-                        <div class="app-icon">
-                            <i class="fas fa-th"></i>
-                        </div>
-                    </div>
-                    <div class="profile-icon" id="results-login-btn">N</div>
-                </div>
-            </div>
-        </header>
-        
-        <div class="results-container">
-            <div class="result-stats" id="result-stats">About 257,000,000 results (0.38 seconds)</div>
-            
-            <div id="search-results">
-                <!-- Results will be populated here -->
-            </div>
-            
-            <div class="ai-insights">
-                <div class="ai-insights-title">
-                    <i class="fas fa-brain"></i>
-                    <h3>AI-Powered Insights</h3>
-                </div>
-                <div class="ai-features-grid">
-                    <div class="ai-feature">
-                        <div class="ai-feature-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <div>AI has analyzed this topic across 15,230 research papers and industry reports</div>
-                    </div>
-                    <div class="ai-feature">
-                        <div class="ai-feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div>Interest in this topic has grown 78% in the last 6 months</div>
-                    </div>
-                    <div class="ai-feature">
-                        <div class="ai-feature-icon">
-                            <i class="fas fa-user-friends"></i>
-                        </div>
-                        <div>Top experts: Dr. Alan Turing, Dr. Fei-Fei Li, Prof. Yoshua Bengio</div>
-                    </div>
-                    <div class="ai-feature">
-                        <div class="ai-feature-icon">
-                            <i class="fas fa-calendar"></i>
-                        </div>
-                        <div>Next breakthrough expected in 2024 based on current research trends</div>
-                    </div>
-                </div>
-            </div>
+    // Show loading state
+    searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+    searchBtn.disabled = true;
+    
+    // Clear previous results
+    resultsContainer.innerHTML = '';
+    resultsContainer.style.display = 'block';
+    
+    // Simulate API call (replace with real API in production)
+    setTimeout(() => {
+      // Generate mock results
+      const responseTime = (Math.random() * 0.05 + 0.05).toFixed(3);
+      let aiAnswer = `Our AI analyzed "${query}" and found these results:`;
+      
+      if(query.toLowerCase().includes('weather')) {
+        aiAnswer = `Today's weather is sunny with a high of 28°C. UV index is 8 (very high).`;
+      }
+      else if(query.toLowerCase().includes('cricket')) {
+        aiAnswer = `Live score: IND 210/3 (35 overs). Kohli 65*, Rahul 42*. Match being played at Eden Gardens.`;
+      }
+      
+      // Build results HTML
+      resultsContainer.innerHTML = `
+        <div style="color: #00d2ff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-bolt"></i>
+          <span>Results in ${responseTime}s - Faster than Google</span>
         </div>
         
-        <footer>
-            <div class="footer-location">India</div>
-            <div class="footer-links">
-                <div class="footer-section">
-                    <a href="#">Help</a>
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Login Modal -->
-    <div class="modal" id="login-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                Sign in to n.ai.in
-            </div>
-            <div class="modal-body">
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="your@email.com">
-                </div>
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancel-login">Cancel</button>
-                <button class="btn btn-primary" id="submit-login">Sign In</button>
-            </div>
+        <div style="background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);">
+          <h3 style="color: #00d2ff; margin-bottom: 10px;"><i class="fas fa-robot"></i> AI Summary</h3>
+          <p style="color: #a0d2eb;">${aiAnswer}</p>
+          <div style="background: rgba(0,210,255,0.2); color: #00d2ff; padding: 5px 10px; border-radius: 20px; display: inline-block; font-size: 12px; margin-top: 10px;">
+            Powered by GPT-4 Turbo
+          </div>
         </div>
-    </div>
-
-    <script>
-        // DOM elements
-        const homePage = document.getElementById('home-page');
-        const resultsPage = document.getElementById('results-page');
-        const searchInput = document.getElementById('search-input');
-        const resultsSearchInput = document.getElementById('results-search-input');
-        const searchButton = document.getElementById('search-button');
-        const luckyButton = document.getElementById('lucky-button');
-        const loginButtons = document.querySelectorAll('#login-btn, #results-login-btn');
-        const loginModal = document.getElementById('login-modal');
-        const cancelLogin = document.getElementById('cancel-login');
-        const submitLogin = document.getElementById('submit-login');
-        const resultStats = document.getElementById('result-stats');
-        const searchResults = document.getElementById('search-results');
         
-        // AI Knowledge Base - Real AI-related content
-        const aiKnowledgeBase = [
-            {
-                title: "Understanding Artificial Intelligence",
-                snippet: "Artificial Intelligence (AI) refers to the simulation of human intelligence in machines programmed to think like humans and mimic their actions. The term may also be applied to any machine that exhibits traits associated with a human mind such as learning and problem-solving.",
-                url: "https://n.ai.in/understanding-ai",
-                code: `function simulateAI(query) {\n  // Process natural language\n  const tokens = tokenize(query);\n  \n  // Understand context and intent\n  const context = analyzeContext(tokens);\n  \n  // Generate intelligent response\n  return generateResponse(context);\n}`,
-                features: [
-                    {icon: "star", text: "AI-powered summary available"},
-                    {icon: "bolt", text: "Real-time analysis"}
-                ]
-            },
-            {
-                title: "Machine Learning Fundamentals",
-                snippet: "Machine learning is a subset of AI that enables systems to learn and improve from experience without being explicitly programmed. It focuses on developing computer programs that can access data and use it to learn for themselves.",
-                url: "https://n.ai.in/machine-learning",
-                code: `from sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Load dataset\nX, y = load_data()\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\n\n# Train model\nmodel = RandomForestClassifier()\nmodel.fit(X_train, y_train)\n\n# Evaluate\naccuracy = model.score(X_test, y_test)`,
-                features: [
-                    {icon: "chart-line", text: "Interactive learning path"},
-                    {icon: "code", text: "Code examples"}
-                ]
-            },
-            {
-                title: "Deep Learning and Neural Networks",
-                snippet: "Deep learning is a machine learning technique that teaches computers to do what comes naturally to humans. Inspired by the human brain, deep learning models are built using neural networks with multiple layers (deep neural networks).",
-                url: "https://n.ai.in/deep-learning",
-                code: `import tensorflow as tf\nfrom tensorflow.keras import layers\n\n# Create a sequential model\nmodel = tf.keras.Sequential([\n  layers.Dense(64, activation='relu', input_shape=(784,)),\n  layers.Dense(64, activation='relu'),\n  layers.Dense(10, activation='softmax')\n])\n\n# Compile the model\nmodel.compile(optimizer='adam',\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])`,
-                features: [
-                    {icon: "network-wired", text: "Neural network visualizer"},
-                    {icon: "robot", text: "AI-generated insights"}
-                ]
-            },
-            {
-                title: "Natural Language Processing",
-                snippet: "NLP is a branch of AI that helps computers understand, interpret and manipulate human language. NLP combines computational linguistics with statistical, machine learning, and deep learning models.",
-                url: "https://n.ai.in/nlp",
-                code: `import nltk\nfrom nltk.sentiment import SentimentIntensityAnalyzer\n\n# Initialize sentiment analyzer\nsia = SentimentIntensityAnalyzer()\n\n# Analyze text sentiment\ntext = "n.ai.in is revolutionizing search with AI!"\nsentiment = sia.polarity_scores(text)\n\n# Output: {'neg': 0.0, 'neu': 0.294, 'pos': 0.706, 'compound': 0.8012}`,
-                features: [
-                    {icon: "language", text: "Multilingual support"},
-                    {icon: "comments", text: "Conversational AI"}
-                ]
-            }
-        ];
-        
-        // Initialize with sample data
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set focus on search input
-            searchInput.focus();
-            
-            // Update dynamic data
-            updateDynamicData();
-        });
-        
-        // Event listeners
-        searchButton.addEventListener('click', performSearch);
-        luckyButton.addEventListener('click', performLuckySearch);
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') performSearch();
-        });
-        
-        resultsSearchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') performSearchFromResults();
-        });
-        
-        loginButtons.forEach(button => {
-            button.addEventListener('click', showLoginModal);
-        });
-        
-        cancelLogin.addEventListener('click', hideLoginModal);
-        submitLogin.addEventListener('click', handleLogin);
-        
-        // Search function
-        function performSearch() {
-            const query = searchInput.value.trim();
-            
-            if (!query) return;
-            
-            // Show results page
-            homePage.classList.add('hidden');
-            resultsPage.classList.remove('hidden');
-            resultsSearchInput.value = query;
-            
-            // Perform search
-            executeSearch(query);
-        }
-        
-        // Lucky search function
-        function performLuckySearch() {
-            const luckyQueries = [
-                "What are the new and curious developments in AI?",
-                "Latest cricket scores and news",
-                "Weather forecast for my location",
-                "SSBCrack shop deals and offers",
-                "How n.ai.in is better than traditional search engines"
-            ];
-            const randomQuery = luckyQueries[Math.floor(Math.random() * luckyQueries.length)];
-            searchInput.value = randomQuery;
-            performSearch();
-        }
-        
-        // Search from results page
-        function performSearchFromResults() {
-            const query = resultsSearchInput.value.trim();
-            if (query) executeSearch(query);
-        }
-        
-        // Execute search (simulates backend)
-        function executeSearch(query) {
-            // Show loading state
-            searchResults.innerHTML = `
-                <div class="loading" style="text-align: center; padding: 40px; font-size: 18px; color: #5f6368;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 36px; margin-bottom: 20px; color: #1a73e8;"></i>
-                    <p>n.ai.in is analyzing your query with advanced AI...</p>
-                    <p>Searching through billions of documents</p>
-                </div>
-            `;
-            
-            // Simulate API call delay (0.4s response time)
-            setTimeout(() => {
-                // Generate results
-                const results = generateSearchResults(query);
-                
-                // Display results
-                displaySearchResults(results);
-                
-                // Update stats
-                const resultCount = Math.floor(Math.random() * 90000000) + 10000000;
-                const timeTaken = (Math.random() * 0.1 + 0.35).toFixed(2);
-                resultStats.textContent = `About ${resultCount.toLocaleString()} results (${timeTaken} seconds)`;
-            }, 400);
-        }
-        
-        // Generate search results
-        function generateSearchResults(query) {
-            const queryLower = query.toLowerCase();
-            
-            // Filter knowledge base for matching results
-            let filteredResults = aiKnowledgeBase.filter(item => {
-                return item.title.toLowerCase().includes(queryLower) || 
-                       item.snippet.toLowerCase().includes(queryLower);
-            });
-            
-            // If no exact matches, generate AI-powered results
-            if (filteredResults.length === 0) {
-                return [
-                    {
-                        title: `AI Analysis: ${query}`,
-                        snippet: `Our AI has analyzed "${query}" across multiple domains. According to our neural networks, this topic has a 92% relevance score to current AI research and shows increasing interest in academic circles.`,
-                        url: `https://n.ai.in/search?q=${encodeURIComponent(query)}`,
-                        code: `// AI analysis function for: ${query}\nfunction analyzeTopic(topic) {\n  const trends = fetchTrends(topic);\n  const relevance = calculateRelevance(trends);\n  const predictions = generatePredictions(trends);\n  \n  return {\n    relevance,\n    predictions,\n    keyInsights: extractKeyInsights(topic)\n  };\n}`,
-                        features: [
-                            {icon: "lightbulb", text: "AI-generated insights"},
-                            {icon: "project-diagram", text: "Topic relevance: 92%"}
-                        ]
-                    },
-                    {
-                        title: `${query} in Modern Applications`,
-                        snippet: `From healthcare to finance, ${query} is transforming industries. Our AI has identified 15,230 real-world applications and case studies demonstrating how ${query} is being implemented across sectors.`,
-                        url: `https://n.ai.in/applications-${query.replace(/\s+/g, '-')}`,
-                        features: [
-                            {icon: "industry", text: "Industry applications"},
-                            {icon: "chart-pie", text: "Market analysis"}
-                        ]
-                    },
-                    {
-                        title: `The Future of ${query}`,
-                        snippet: `Based on current research trends and technological advancements, our AI predicts that ${query} will see major breakthroughs in the next 3-5 years. Key areas of development include efficiency improvements and new application domains.`,
-                        url: `https://n.ai.in/future-${query.replace(/\s+/g, '-')}`,
-                        features: [
-                            {icon: "calendar", text: "5-year forecast"},
-                            {icon: "flask", text: "Research preview"}
-                        ]
-                    },
-                    {
-                        title: `Learning Resources for ${query}`,
-                        snippet: `Master ${query} with our AI-curated learning path. We've analyzed thousands of resources to bring you the most effective courses, tutorials, and research papers on this topic.`,
-                        url: `https://n.ai.in/learn-${query.replace(/\s+/g, '-')}`,
-                        code: `// Sample code for ${query}\nfunction ${query.replace(/\s+/g, '')}Example() {\n  // Initialize ${query} module\n  const module = require('${query.toLowerCase()}-ai');\n  \n  // Implement core functionality\n  const result = module.analyzeData(data);\n  \n  // Return insights\n  return result.insights;\n}`,
-                        features: [
-                            {icon: "graduation-cap", text: "Learning path"},
-                            {icon: "book", text: "Resource recommendations"}
-                        ]
-                    }
-                ];
-            }
-            
-            return filteredResults;
-        }
-        
-        // Display search results
-        function displaySearchResults(results) {
-            if (!results || results.length === 0) {
-                searchResults.innerHTML = '<p class="no-results">No results found. Try a different query.</p>';
-                return;
-            }
-            
-            let resultsHTML = '';
-            
-            results.forEach((result, index) => {
-                resultsHTML += `
-                    <div class="result-item">
-                        <div class="result-url">${result.url}</div>
-                        <a href="${result.url}" class="result-title">${result.title}</a>
-                        <div class="result-snippet">${result.snippet}</div>
-                        ${result.code ? `<div class="code-block">${result.code}</div>` : ''}
-                        <div class="result-features">
-                            ${result.features ? result.features.map(feature => `
-                                <div class="result-feature">
-                                    <i class="fas fa-${feature.icon}"></i>
-                                    <span>${feature.text}</span>
-                                </div>
-                            `).join('') : ''}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            searchResults.innerHTML = resultsHTML;
-        }
-        
-        // Update dynamic data (cricket, weather)
-        function updateDynamicData() {
-            // Update cricket score
-            const slScore = Math.floor(Math.random() * 20) + 368;
-            const slOvers = (Math.random() * 5 + 93).toFixed(1);
-            document.querySelector('.cricket-score:first-child').textContent = `${slScore}/${Math.floor(Math.random() * 3) + 4} (${slOvers})`;
-            
-            // Update temperature
-            const temp = (Math.random() * 3 + 27).toFixed(0);
-            document.querySelector('.weather-temp').textContent = `${temp}°`;
-            
-            // Update humidity
-            const humidity = Math.floor(Math.random() * 10) + 20;
-            document.querySelector('.weather-details div:first-child').textContent = `Humidity: ${humidity}%`;
-        }
-        
-        // Show login modal
-        function showLoginModal() {
-            loginModal.style.display = 'flex';
-        }
-        
-        // Hide login modal
-        function hideLoginModal() {
-            loginModal.style.display = 'none';
-        }
-        
-        // Handle login
-        function handleLogin() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if (email && password) {
-                // In a real app, this would authenticate with a backend
-                alert(`Welcome to n.ai.in! You're now signed in as ${email}`);
-                hideLoginModal();
-                
-                // Update profile icon
-                document.querySelectorAll('.profile-icon').forEach(icon => {
-                    icon.textContent = email.charAt(0).toUpperCase();
-                });
-            } else {
-                alert('Please enter both email and password');
-            }
-        }
-        
-        // Update data every 30 seconds
-        setInterval(updateDynamicData, 30000);
+        <div style="background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);">
+          <h3 style="color: #00d2ff; margin-bottom: 10px;"><i class="fas fa-globe"></i> Web Results</h3>
+          ${[1,2,3].map(i => `
+            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <h4 style="color: white; margin-bottom: 5px;">${query} - Result ${i}</h4>
+              <p style="color: #a0d2eb; font-size: 14px;">This is a sample search result for your query. In a real implementation, this would come from your search API.</p>
+              <p style="color: #00d2ff; font-size: 13px;">https://example.com/${query.replace(/ /g, '-')}-${i}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      
+      // Reset button
+      searchBtn.innerHTML = '<i class="fas fa-search"></i> Search';
+      searchBtn.disabled = false;
+      
+      // Scroll to results
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100); // Simulate 0.1s response
+  }
+});
     </script>
-</body>
-</html>
